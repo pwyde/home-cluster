@@ -4,15 +4,16 @@ kind: Kustomization
 resources:
   - ./bjw-s.yaml
   - ./cilium.yaml
+  - ./cloudnative-pg.yaml
   - ./coredns.yaml
   - ./democratic-csi.yaml
+  - ./external-dns.yaml
+  - ./ingress-nginx.yaml
   - ./jetstack.yaml
+  - ./k8s-gateway.yaml
   - ./metrics-server.yaml
   - ./openebs.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
   - ./spegel.yaml
   - ./stakater.yaml
-  - ./external-dns.yaml
-  - ./ingress-nginx.yaml
-  - ./k8s-gateway.yaml
