@@ -1,0 +1,249 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+spec:
+  interval: 30h
+  timeout: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 61.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  install:
+    crds: Skip
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: Skip
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: prometheus-operator-crds
+      namespace: observability
+    - name: democratic-csi-iscsi
+      namespace: storage
+  valuesFrom:
+  - kind: ConfigMap
+    name: flux-kube-state-metrics-config
+    valuesKey: kube-state-metrics.yaml
+  values:
+    crds:
+      enabled: false
+    cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      ingress:
+        enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: &host alertmanager.${SECRET_DOMAIN}
+        ingressClassName: internal
+        pathType: Prefix
+        hosts:
+          - *host
+        tls:
+          - hosts:
+              - *host
+      alertmanagerSpec:
+        # Alertmanager configuration is provided as a secret.
+        useExistingSecret: true
+        # The configuration secret is exported to /etc/alertmanager/config_out/alertmanager.env.yaml
+        # using Kustomize secretGenerator.
+        configSecret: alertmanager-config
+        # Mount secret into /etc/alertmanager/secrets/alertmanager-secret.
+        secrets:
+          - alertmanager-secret
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
+        storage:
+          volumeClaimTemplate:
+            metadata:
+              name: data
+            spec:
+              storageClassName: truenas-ssd-iscsi
+              resources:
+                requests:
+                  storage: 1Gi
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        cAdvisorMetricRelabelings:
+          # Drop less useful container CPU metrics.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: "container_cpu_(cfs_throttled_seconds_total|load_average_10s|system_seconds_total|user_seconds_total)"
+          # Drop less useful / always zero container memory metrics.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: "container_memory_(failures_total|mapped_file|swap)"
+          # Drop less useful container process metrics.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: "container_(file_descriptors|tasks_state|threads_max)"
+          # Drop less useful container / always zero filesystem metrics.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: "container_fs_(io_current|io_time_seconds_total|io_time_weighted_seconds_total|reads_merged_total|sector_reads_total|sector_writes_total|writes_merged_total)"
+          # Drop less useful container blkio metrics.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: "container_blkio_device_usage_total"
+          # Drop container spec metrics that overlap with kube-state-metrics.
+          - sourceLabels: [__name__]
+            action: drop
+            regex: "container_spec.*"
+          # Drop cgroup metrics with no pod.
+          - sourceLabels: [id, pod]
+            action: drop
+            regex: ".+;"
+          # Drop high-cardinality labels.
+          - action: labeldrop
+            regex: (uid|id|name|pod_uid|interface)
+        probesMetricRelabelings:
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: prober_probe_duration_seconds_bucket
+        metricRelabelings:
+          # Drop high-cardinality labels.
+          - action: labeldrop
+            regex: (uid|id|name|pod_uid|interface)
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
+    kubeApiServer:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          # Drop high-cardinality labels.
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: apiserver_(response|watch_events)_sizes_bucket
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: apiserver_request_body_size_bytes_bucket
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: workqueue_(work|queue)_duration_seconds_bucket
+    kubeControllerManager:
+      enabled: true
+      endpoints: &cp
+        - ${K8S_1_IP}
+        - ${K8S_2_IP}
+        - ${K8S_3_IP}
+      serviceMonitor: &sm
+        metricRelabelings:
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: workqueue_(work|queue)_duration_seconds_bucket
+    kubeEtcd:
+      enabled: true
+      endpoints: *cp
+    kubeScheduler:
+      enabled: true
+      endpoints: *cp
+      serviceMonitor: *sm
+    kubeProxy:
+      enabled: false
+    kubeStateMetrics:
+      enabled: true
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - pods=[*]
+        - deployments=[*]
+        - persistentvolumeclaims=[*]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+    nodeExporter:
+      enabled: true
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+            - action: replace
+              regex: (.*)
+              replacement: $1.${SECRET_DOMAIN}:9100
+              sourceLabels:
+                - kubernetes_node
+              targetLabel: instance
+    prometheus:
+      ingress:
+        enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: &host prometheus.${SECRET_DOMAIN}
+        ingressClassName: internal
+        pathType: Prefix
+        hosts:
+          - *host
+        tls:
+          - hosts:
+              - *host
+      prometheusSpec:
+        scrapeInterval: 30s # Must match interval in Grafana Helm chart.
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        enableAdminAPI: true
+        walCompression: true
+        enableFeatures:
+          - auto-gomemlimit
+          # https://prometheus.io/docs/prometheus/latest/feature_flags/
+          - memory-snapshot-on-shutdown
+          - new-service-discovery-manager
+        retention: 14d
+        retentionSize: 80GB
+        resources:
+          requests:
+            cpu: 300m
+            # memory: 1500Mi
+          limits:
+            # cpu: 350m
+            memory: 1500Mi
+        storageSpec:
+          volumeClaimTemplate:
+            metadata:
+              name: data
+            spec:
+              storageClassName: truenas-ssd-iscsi
+              resources:
+                requests:
+                  storage: 100Gi
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      defaultDashboardsTimezone: browser
+      sidecar:
+        dashboards:
+          annotations:
+            grafana_folder: Kubernetes
