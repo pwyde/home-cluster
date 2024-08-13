@@ -10,3 +10,4 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
+  - ./promtail/ks.yaml
