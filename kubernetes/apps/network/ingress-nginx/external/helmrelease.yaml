@@ -26,12 +26,14 @@ spec:
   valuesFrom:
     - targetPath: controller.maxmindLicenseKey
       kind: Secret
-      name: ingress-nginx-external-secret
+      name: &secret ingress-nginx-external-secret
       valuesKey: MAXMIND_LICENSE_KEY
   values:
     fullnameOverride: ingress-nginx-external
     controller:
       replicaCount: 2
+      annotations:
+        configmap.reloader.stakater.com/reload: *secret
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.${SECRET_DOMAIN}"
