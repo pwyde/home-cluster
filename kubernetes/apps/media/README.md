@@ -23,7 +23,7 @@ Dump the schema for the **main** and **logs** databases using `pg_dump` with the
 
 ```sh
 pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_main -f /home/${USER}/radarr_main.sql
-pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_main -f /home/${USER}/radarr_log.sql
+pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_log -f /home/${USER}/radarr_log.sql
 ```
 
 In order to reset all tables to a clean starting point before importing the SQLite data, drop and re-create the databases on the PostgreSQL cluster. Using `psql` with the default superuser login.
@@ -56,6 +56,8 @@ Now with the schema re-imported and all tables clean, the SQLite databases can b
 docker run --rm -v ${HOME}/radarr.db:/radarr.db:ro --network=host ghcr.io/roxedus/pgloader --with "quote identifiers" --with "data only" /radarr.db "postgresql://radarr:${RADARR__POSTGRES__PASSWORD}@postgres.${SECRET_DOMAIN}/radarr_main"
 docker run --rm -v ${HOME}/logs.db:/logs.db:ro --network=host ghcr.io/roxedus/pgloader --with "quote identifiers" --with "data only" /logs.db "postgresql://radarr:${RADARR__POSTGRES__PASSWORD}@postgres.${SECRET_DOMAIN}/radarr_log"
 ```
+
+**Note:** If `pgloader` generate errors it could be due to the database being too large, to resolve this try adding `--with "prefetch rows = 100" --with "batch size = 1MB"` to the command above.
 
 Re-deploy Radarr in the Kubernetes cluster.
 
