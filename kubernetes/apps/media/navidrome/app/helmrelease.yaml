@@ -40,10 +40,19 @@ spec:
             env:
               TZ: ${TIMEZONE}
               ND_LOGLEVEL: info
-              ND_CONFIGFILE: /config/navidrome.toml
               ND_DATAFOLDER: /data
               ND_CACHEFOLDER: /data/cache
-              ND_MUSICFOLDER: /mnt/media/Library/Music
+              ND_MUSICFOLDER: /music
+              ND_AUTOIMPORTPLAYLISTS: false
+              ND_ARTISTARTPRIORITY: 'folder.*, external'
+              ND_COVERARTPRIORITY: 'folder.*, cover.*, embedded, external'
+              ND_DEFAULTLANGUAGE: 'en'
+              ND_DEFAULTTHEME: 'Spotify-ish'
+              ND_IMAGECACHESIZE: '512MB'
+              ND_PROMETHEUS_ENABLED: true
+              ND_SCANSCHEDULE: '@every 1h'
+              ND_SESSIONTIMEOUT: '72h'
+              ND_TRANSCODINGCACHESIZE: '512MB'
             probes:
               liveness: &probes
                 enabled: true
@@ -98,18 +107,10 @@ spec:
     persistence:
       data:
         existingClaim: navidrome-data
-      media:
+      music:
         type: nfs
         server: ${TRUENAS_IP}
-        path: ${NFS_PATH_MEDIA}
+        path: ${NFS_PATH_MUSIC}
         globalMounts:
-          - path: /mnt/media
+          - path: /music
             readOnly: true
-      navidrome-config:
-        type: configMap
-        name: navidrome-config
-        globalMounts:
-          - path: /config/navidrome.toml
-            subPath: navidrome.toml
-            readOnly: true
-

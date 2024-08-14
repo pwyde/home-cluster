@@ -5,9 +5,5 @@ resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
   - ../../../../templates/gatus/internal
-configMapGenerator:
-  - name: navidrome-config
-    files:
-      - navidrome.toml=./resources/navidrome.toml
 generatorOptions:
   disableNameSuffixHash: true
