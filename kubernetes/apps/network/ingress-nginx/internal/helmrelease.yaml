@@ -67,6 +67,7 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+      terminationGracePeriodSeconds: 120
       resources:
         requests:
           cpu: 100m
