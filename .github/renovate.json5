@@ -36,6 +36,14 @@
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
   "commitMessageSuffix": "",
+  // grafana dashboards
+  "customDatasources": {
+    "grafana-dashboards": {
+      "defaultRegistryUrlTemplate": "https://grafana.com/api/dashboards/{{packageName}}",
+      "format": "json",
+      "transformTemplates": ["{\"releases\":[{\"version\": $string(revision)}]}"]
+    }
+  },
   // package rules
   "packageRules": [
     // automerge
@@ -191,6 +199,18 @@
       "matchDatasources": ["docker"],
       "matchPackagePatterns": ["minio"],
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$"
+    },
+    // grafana dashboards
+    {
+      "addLabels": ["renovate/grafana-dashboard"],
+      "automerge": true,
+      "automergeType": "branch",
+      "matchDatasources": ["custom.grafana-dashboards"],
+      "matchUpdateTypes": ["major"],
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "grafana-dashboards",
+      "commitMessageTopic": "dashboard {{depName}}",
+      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
     }
   ],
   // custom managers
@@ -205,6 +225,16 @@
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+: (&\\S+\\s)?(?<currentValue>\\S+)"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
+    },
+    // grafana dashboards
+    {
+      "customType": "regex",
+      "description": ["Process Grafana dashboards"],
+      "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      "matchStrings": ["depName=\"(?<depName>.*)\"\\n(?<indentation>\\s+)gnetId: (?<packageName>\\d+)\\n.+revision: (?<currentValue>\\d+)"],
+      "autoReplaceStringTemplate": "depName=\"{{{depName}}}\"\n{{{indentation}}}gnetId: {{{packageName}}}\n{{{indentation}}}revision: {{{newValue}}}",
+      "datasourceTemplate": "custom.grafana-dashboards",
+      "versioningTemplate": "regex:^(?<major>\\d+)$"
     }
   ]
 }
