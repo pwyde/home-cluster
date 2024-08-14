@@ -243,7 +243,8 @@ spec:
           # renovate: depName="Navidrome"
           gnetId: 18038
           revision: 1
-          datasource: Prometheus
+          datasource:
+            - { name: DS_VICTORIAMETRICS, value: Prometheus }
       network:
         cert-manager:
           # Missing data legends, see https://github.com/monitoring-mixins/website/issues/37
