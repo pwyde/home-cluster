@@ -9,3 +9,4 @@ resources:
   - ./bazarr/ks.yaml
   - ./lidarr/ks.yaml
   - ./navidrome/ks.yaml
+  - ./prowlarr/ks.yaml
