@@ -180,12 +180,6 @@ spec:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dashboard.json
           datasource: Prometheus
       default:
-        unpackerr:
-          # renovate: depName="Unpackerr"
-          gnetId: 18817
-          revision: 1
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         flaresolverr:
           # renovate: depName="FlareSolverr"
           gnetId: 19363
@@ -245,6 +239,12 @@ spec:
           revision: 1
           datasource:
             - { name: DS_VICTORIAMETRICS, value: Prometheus }
+        unpackerr:
+          # renovate: depName="Unpackerr"
+          gnetId: 18817
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       network:
         cert-manager:
           # Missing data legends, see https://github.com/monitoring-mixins/website/issues/37
