@@ -22,8 +22,8 @@ Remove Radarr deployment in the Kubernetes cluster.
 Dump the schema for the **main** and **logs** databases using `pg_dump` with the default superuser login.
 
 ```sh
-pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_main -f /home/${USER}/radarr_main.sql
-pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_log -f /home/${USER}/radarr_log.sql
+pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_main -f ${HOME}/radarr_main.sql
+pg_dump -h postgres.${SECRET_DOMAIN} -U postgres -s -d radarr_log -f ${HOME}/radarr_log.sql
 ```
 
 In order to reset all tables to a clean starting point before importing the SQLite data, drop and re-create the databases on the PostgreSQL cluster. Using `psql` with the default superuser login.
@@ -61,6 +61,38 @@ docker run --rm -v ${HOME}/logs.db:/logs.db:ro --network=host ghcr.io/roxedus/pg
 
 Re-deploy Radarr in the Kubernetes cluster.
 
-### References
+#### References
 - [Main migration article from Servarr Wiki](https://wiki.servarr.com/radarr/postgres-setup)
 - [Migrate Radarr from SQLite to Postgres](https://gist.github.com/tobz/929fd4ad8da80ac2ce524af73d4ea615)
+
+### Bazarr
+
+**Bazarr** is not officially part of the **Arr** application suite, hence the procedure to migrate data from SQLite to PostgreSQL database differs.
+
+Before starting a migration please ensure that Bazarr has run against the previously created PostgreSQL database at least once successfully.
+
+Remove Bazarr deployment in the Kubernetes cluster.
+
+Connect to the Bazarr database using `psql` and prepare the it for data migration.
+
+```sh
+psql -h postgres.${SECRET_DOMAIN} -U bazarr
+```
+
+```
+DELETE FROM "system" WHERE 1=1;
+DELETE FROM "table_settings_languages" WHERE 1=1;
+DELETE FROM "table_settings_notifier" WHERE 1=1;
+\q
+```
+
+SQLite databases can now be migrated using `pgloader`.
+
+```sh
+docker run --rm -v ${HOME}/bazarr.db:/bazarr.db --network=host ghcr.io/roxedus/pgloader --with "quote identifiers" --with "data only" --cast "column table_blacklist.timestamp to timestamp" --cast "column table_blacklist_movie.timestamp to timestamp" --cast "column table_history.timestamp to timestamp" --cast "column table_history_movie.timestamp to timestamp" /bazarr.db "postgresql://bazarr:${BAZARR__POSTGRES__PASSWORD}@postgres.${SECRET_DOMAIN}/bazarr"
+```
+
+Re-deploy Bazarr in the Kubernetes cluster.
+
+#### References
+- [Main migration article from Bazarr Wiki](https://wiki.bazarr.media/Additional-Configuration/PostgreSQL-Database/)
