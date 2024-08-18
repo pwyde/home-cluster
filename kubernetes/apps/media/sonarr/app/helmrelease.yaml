@@ -47,7 +47,6 @@ spec:
               tag: 4.0.8.2158@sha256:0e170fb71f932f78103328127dec5249dcbf384ad62d24087ef0dea47cf7fa5a
             env:
               TZ: ${TIMEZONE}
-              UMASK: 002
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
