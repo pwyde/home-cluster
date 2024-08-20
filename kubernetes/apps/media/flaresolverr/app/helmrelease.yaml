@@ -56,12 +56,6 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            resources:
-              requests:
-                cpu: 100m
-                memory: 100Mi
-              limits:
-                memory: 300Mi
     service:
       app:
         controller: *app
