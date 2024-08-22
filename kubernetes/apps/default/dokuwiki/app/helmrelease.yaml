@@ -33,7 +33,7 @@ spec:
           dokuwiki:
             image:
               repository: docker.io/dokuwiki/dokuwiki
-              tag: latest@sha256:d0f4d9817feb75b1f027fba53378e8b32ed9b94e53902951cce3310261eb53de
+              tag: latest@sha256:691bdff4e6ca8713991e79fb9fd42defd72cf6ae780a727fd0f4df2c7a03881e
             env:
               PHP_TIMEZONE: ${TIMEZONE}
             probes:
