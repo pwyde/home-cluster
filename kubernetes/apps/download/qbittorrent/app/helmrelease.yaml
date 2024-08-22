@@ -188,11 +188,11 @@ spec:
                 spec:
                   exec: *exec
                   periodSeconds: 5
-        pod:
-          securityContext:
-            fsGroup: &gid 4000
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [*gid]
+    defaultPodOptions:
+      securityContext:
+        fsGroup: &gid 4000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [*gid]
     service:
       app:
         controller: *app
