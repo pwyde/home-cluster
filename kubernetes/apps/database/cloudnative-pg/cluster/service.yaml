@@ -15,4 +15,4 @@ spec:
       targetPort: *port
   selector:
     cnpg.io/cluster: postgres16
-    role: primary
+    cnpg.io/instanceRole: primary
