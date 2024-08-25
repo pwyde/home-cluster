@@ -80,6 +80,16 @@ spec:
                 memory: 4Gi
                 nvidia.com/gpu: 1
     defaultPodOptions:
+      priorityClassName: jellyfin-priority
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - k8s-5
       nodeSelector:
         nvidia.com/gpu.present: "true"
       runtimeClassName: nvidia
