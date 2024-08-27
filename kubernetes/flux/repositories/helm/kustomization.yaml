@@ -8,7 +8,6 @@ resources:
   - ./coredns.yaml
   - ./democratic-csi.yaml
   - ./external-dns.yaml
-  - ./external-secrets.yaml
   - ./grafana.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
