@@ -43,9 +43,9 @@ session:
 notifier:
   # disable_startup_check: true
   smtp:
-    username: $${SMTP_USERNAME}
-    password: $${SMPT_PASSWORD}
-    address: $${SMTP_ADDRESS}
+    username: $${AUTHELIA_SMTP_USERNAME}
+    password: $${AUTHELIA_SMPT_PASSWORD}
+    address: $${AUTHELIA_SMTP_ADDRESS}
     sender: Authelia <authelia@${SECRET_DOMAIN}>
 
 totp:
@@ -53,7 +53,7 @@ totp:
   issuer: authelia.com
 
 webauthn:
-  disable: false
+  disable: true
 
 duo_api:
   disable: true
@@ -67,8 +67,6 @@ access_control:
 
 identity_providers:
   oidc:
-    jwks:
-      - key: {{ secret "/config/oidc-jwks-key.pem" | mindent 10 "|" | msquote }}
     cors:
       endpoints: ["authorization", "token", "revocation", "introspection"]
       allowed_origins_from_client_redirect_uris: true
