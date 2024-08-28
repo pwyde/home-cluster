@@ -2,7 +2,7 @@
 # Note: Authelia variables passed through a secret must be escaped with $${VAR_NAME}
 # to avoid interpolation by Flux.
 log:
-  level: debug
+  level: info
 
 authentication_backend:
   ldap:
@@ -35,7 +35,7 @@ session:
     - name: authelia_session
       domain: ${SECRET_DOMAIN}
       authelia_url: https://auth.${SECRET_DOMAIN}
-      default_redirection_url: https://${SECRET_DOMAIN}
+      default_redirection_url: https://auth.${SECRET_DOMAIN}
   redis:
     database_index: 2
     host: dragonfly.database.svc.cluster.local
