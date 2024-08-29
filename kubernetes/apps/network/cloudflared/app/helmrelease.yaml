@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cloudflared
+  name: &app cloudflared
 spec:
   interval: 30m
   chart:
@@ -72,15 +72,22 @@ spec:
         runAsUser: &uid 65534
         runAsGroup: *uid
         seccompProfile: { type: RuntimeDefault }
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       app:
-        controller: cloudflared
+        controller: *app
         ports:
           http:
             port: *port
     serviceMonitor:
       app:
-        serviceName: cloudflared
+        serviceName: *app
         endpoints:
           - port: http
             scheme: http
@@ -95,7 +102,7 @@ spec:
           - path: /etc/cloudflared/config/config.yaml
             subPath: config.yaml
             readOnly: true
-      creds:
+      credentials:
         type: secret
         name: cloudflared-tunnel-secret
         globalMounts:
