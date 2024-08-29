@@ -52,14 +52,8 @@ spec:
           - hosts:
               - *host
       alertmanagerSpec:
-        # Alertmanager configuration is provided as a secret.
         useExistingSecret: true
-        # The configuration secret is exported to /etc/alertmanager/config_out/alertmanager.env.yaml
-        # using Kustomize secretGenerator.
-        configSecret: alertmanager-config
-        # Mount secret into /etc/alertmanager/secrets/alertmanager-secret.
-        secrets:
-          - alertmanager-secret
+        configSecret: alertmanager-secret
         resources:
           requests:
             cpu: 50m
