@@ -38,11 +38,6 @@ spec:
               TUNNEL_ORIGIN_ENABLE_HTTP2: true
               TUNNEL_TRANSPORT_PROTOCOL: quic
               TUNNEL_POST_QUANTUM: true
-              TUNNEL_ID:
-                valueFrom:
-                  secretKeyRef:
-                    name: cluster-secrets
-                    key: SECRET_CLOUDFLARE_TUNNEL_ID
             args:
               - tunnel
               - --config
