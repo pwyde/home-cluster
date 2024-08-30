@@ -305,11 +305,8 @@ spec:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
         smart:
-          # renovate: depName="Dashboard for smartctl_exporter"
-          gnetId: 20204
-          revision: 1
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+          url: https://raw.githubusercontent.com/pwyde/home-cluster/main/kubernetes/apps/observability/grafana/app/resources/smartctl_exporter-dashboard.json
+          datasource: Prometheus
       unifi:
         unifi-insights:
           # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
