@@ -36,7 +36,7 @@ spec:
           audiobookshelf:
             image:
               repository: ghcr.io/advplyr/audiobookshelf
-              tag: 2.12.3@sha256:f37ff3ee981ad7e46c17d6638a6868a9ec361db352dad0edc47a1146bf07451e
+              tag: 2.13.0@sha256:d47f9e3308e52a58450e52363e6d4b8dcc86628a7801f3656489fd7ad7a8ce95
             env:
               TZ: ${TIMEZONE}
               CONFIG_PATH: /config
