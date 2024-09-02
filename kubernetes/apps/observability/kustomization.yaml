@@ -12,4 +12,5 @@ resources:
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./promtail/ks.yaml
+  - ./silence-operator/ks.yaml
   - ./unpoller/ks.yaml
