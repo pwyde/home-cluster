@@ -1,0 +1,52 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kubernetes-dashboard
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kubernetes-dashboard
+      version: 7.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: kubernetes-dashboard
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    app:
+      settings:
+        global: home-cluster
+        itemsPerPage: 50
+      ingress:
+        enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: &host k8s-dashboard.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/whitelist-source-range: ${NODE_CIDR}
+        ingressClassName: internal
+        hosts:
+          - *host
+        tls:
+          # No need for seperate certificates. Will use ingress-nginx.
+          enabled: false
+      metricsScraper:
+        enabled: true
+      nginx:
+        enabled: false
+      cert-manager:
+        enabled: false
+        installCRDs: false
+      metrics-server:
+        enabled: false
+
