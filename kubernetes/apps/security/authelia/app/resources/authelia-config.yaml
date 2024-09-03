@@ -1,6 +1,6 @@
 ---
-# Note: Authelia variables passed through a secret must be escaped with $${VAR_NAME}
-# to avoid interpolation by Flux.
+# Note: Authelia variables should be escaped with '$${VAR_NAME}' to avoid
+# interpolation by Flux.
 log:
   level: info
 
@@ -36,8 +36,8 @@ session:
       domain: ${SECRET_DOMAIN}
       authelia_url: https://auth.${SECRET_DOMAIN}
   redis:
-    database_index: 2
     host: dragonfly.database.svc.cluster.local
+    database_index: 2
 
 notifier:
   # disable_startup_check: true
@@ -62,7 +62,13 @@ access_control:
   networks:
     - name: internal
       networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
-  rules: []
+  rules:
+    - domain: "auth.${SECRET_DOMAIN}"
+      policy: bypass
+    - domain: "*.${SECRET_DOMAIN}"
+      policy: two_factor
+    - domain: "${SECRET_DOMAIN}"
+      policy: two_factor
 
 identity_providers:
   oidc:
