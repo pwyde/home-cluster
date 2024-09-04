@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./blackbox-exporter/ks.yaml
   - ./prowlarr-exporter/ks.yaml
+  - ./radarr-exporter/ks.yaml
