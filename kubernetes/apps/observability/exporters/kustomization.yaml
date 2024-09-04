@@ -5,3 +5,4 @@ resources:
   - ./blackbox-exporter/ks.yaml
   - ./prowlarr-exporter/ks.yaml
   - ./radarr-exporter/ks.yaml
+  - ./sonarr-exporter/ks.yaml
