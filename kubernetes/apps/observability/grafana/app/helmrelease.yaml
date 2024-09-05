@@ -198,13 +198,13 @@ spec:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
           datasource: Prometheus
       default:
+      download:
         flaresolverr:
           # renovate: depName="FlareSolverr"
           gnetId: 19363
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-      download:
         qbittorrent-exporter:
           url: https://raw.githubusercontent.com/esanchezm/prometheus-qbittorrent-exporter/master/grafana/dashboard.json
           datasource:
