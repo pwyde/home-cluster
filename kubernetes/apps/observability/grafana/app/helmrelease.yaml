@@ -263,7 +263,7 @@ spec:
         navidrome:
           url: https://raw.githubusercontent.com/pwyde/home-cluster/main/kubernetes/apps/observability/grafana/app/resources/navidrome-dashboard.json
           datasource:
-            - { name: prom, value: Prometheus }
+            - { name: DS_PROMETHEUS, value: Prometheus }
         unpackerr:
           # renovate: depName="Unpackerr"
           # gnetId: 18817
