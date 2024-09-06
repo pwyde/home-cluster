@@ -257,7 +257,7 @@ spec:
           datasource: Prometheus
       media:
         exportarr:
-          url: https://raw.githubusercontent.com/onedr0p/exportarr/master/examples/grafana/dashboard2.json
+          url: https://raw.githubusercontent.com/pwyde/home-cluster/main/kubernetes/apps/observability/grafana/app/resources/exportarr-dashboard.json
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
