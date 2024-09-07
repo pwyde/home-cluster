@@ -311,7 +311,7 @@ spec:
         external-secrets:
           # renovate: depName="External Secrets"
           gnetId: 21640
-          revision: 3
+          revision: 4
           datasource: Prometheus
         external-secrets-operator:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
