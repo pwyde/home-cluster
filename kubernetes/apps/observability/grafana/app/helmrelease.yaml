@@ -312,7 +312,8 @@ spec:
           # renovate: depName="External Secrets"
           gnetId: 21640
           revision: 4
-          datasource: Prometheus
+          datasource:
+            - { name: DS_METRICS, value: Prometheus }
         external-secrets-operator:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
