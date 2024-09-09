@@ -80,6 +80,8 @@ spec:
       app:
         annotations:
           external-dns.alpha.kubernetes.io/target: &host jellystat.${SECRET_DOMAIN}
+          # Fix Jellystat with error-pages.
+          nginx.ingress.kubernetes.io/custom-http-errors: "599"
         className: internal
         hosts:
           - host: *host
