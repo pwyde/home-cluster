@@ -34,9 +34,9 @@ spec:
             image:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
-            envFrom:
+            envFrom: &envFrom
               - secretRef:
-                  name: jellystat
+                  name: jellystat-secret
         containers:
           jellystat:
             image:
@@ -44,9 +44,7 @@ spec:
               tag: 1.1.0@sha256:92d5cd58779828bb06df982ca735e8e15bb6ab9ba749c0965296946e30428641
             env:
               TZ: ${TIMEZONE}
-            envFrom:
-              - secretRef:
-                  name: jellystat
+            envFrom: *envFrom
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
