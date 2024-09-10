@@ -13,12 +13,6 @@ spec:
   superuserSecret:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
-  # https://github.com/tensorchord/cloudnative-pgvecto.rs#cnpgvectors
-  bootstrap:
-    initdb:
-      postInitSQL:
-        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
-        - CREATE EXTENSION IF NOT EXISTS "vectors";
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
