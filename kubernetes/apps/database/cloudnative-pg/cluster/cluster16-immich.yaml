@@ -18,8 +18,9 @@ spec:
       - "vectors.so"
     parameters:
       max_connections: "600"
-      max_slot_wal_keep_size: 10GB
       shared_buffers: 512MB
+      # https://github.com/tensorchord/cloudnative-pgvecto.rs/issues/29
+      search_path: '"$user", public, vectors'
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true
