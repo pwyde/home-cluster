@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ./priorityclass.yaml
   # Flux-Kustomizations
   - ./audiobookshelf/ks.yaml
   - ./bazarr/ks.yaml

@@ -1,8 +1,0 @@
----
-apiVersion: scheduling.k8s.io/v1
-kind: PriorityClass
-metadata:
-  name: jellyfin-priority
-value: 1000
-globalDefault: false
-description: "Priority class for Jellyfin pod to have precedence on k8s-5 node."

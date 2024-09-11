@@ -80,7 +80,7 @@ spec:
                 memory: 4Gi
                 nvidia.com/gpu: 1
     defaultPodOptions:
-      priorityClassName: jellyfin-priority
+      priorityClassName: gpu-priority
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
