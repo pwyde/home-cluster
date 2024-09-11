@@ -135,22 +135,22 @@ spec:
             regex: workqueue_(work|queue)_duration_seconds_bucket
     kubeControllerManager:
       enabled: true
-      endpoints: &cp
+      endpoints: &endpoints
         - ${K8S_1_IP}
         - ${K8S_2_IP}
         - ${K8S_3_IP}
-      serviceMonitor: &sm
+      serviceMonitor: &serviceMonitor
         metricRelabelings:
           - action: drop
             sourceLabels: ["__name__"]
             regex: workqueue_(work|queue)_duration_seconds_bucket
     kubeEtcd:
       enabled: true
-      endpoints: *cp
+      endpoints: *endpoints
     kubeScheduler:
       enabled: true
-      endpoints: *cp
-      serviceMonitor: *sm
+      endpoints: *endpoints
+      serviceMonitor: *serviceMonitor
     kubeProxy:
       enabled: false
     kubeStateMetrics:
