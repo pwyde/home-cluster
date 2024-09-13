@@ -17,9 +17,9 @@
       "TunnelAuthentication": 0
     },
     "2": {
-      "Name": "postgres16-immich",
+      "Name": "pgvectors",
       "Group": "Servers",
-      "Host": "postgres16-immich-rw.database.svc.cluster.local",
+      "Host": "pgvectors-rw.database.svc.cluster.local",
       "Port": 5432,
       "MaintenanceDB": "postgres",
       "Username": "postgres",
