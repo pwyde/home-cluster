@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres16-immich
+  name: pgvectors
 spec:
   instances: 3
   imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2-v0.2.1
@@ -43,7 +43,7 @@ spec:
       endpointURL: https://s3.${SECRET_DOMAIN}
       # Note: serverName version needs to be inclemented
       # when recovering from an existing cnpg cluster.
-      serverName: &currentCluster postgres16-immich-v1
+      serverName: &currentCluster pgvectors-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -55,7 +55,7 @@ spec:
   # cluster when recovering from an existing cnpg cluster.
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster postgres16-immich-v1
+  #     source: &previousCluster pgvectors-v1
   # Note: externalClusters is needed when recovering from an existing cnpg cluster.
   # externalClusters:
   #   - name: *previousCluster
