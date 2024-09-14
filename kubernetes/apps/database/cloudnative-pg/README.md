@@ -64,3 +64,13 @@
     ```sh
     mcli admin policy attach minio cloudnative-pg-private --user cloudnative-pg
     ```
+
+## Clusters
+
+### postgres16
+
+Main PostgreSQL cluster on major version `16`. Hosts most application databases.
+
+### pgvectors
+
+Special cluster with the [`pgvecto.rs`](https://github.com/tensorchord/cloudnative-pgvecto.rs) extension. Used by applications that require a [**vector database**](https://en.wikipedia.org/wiki/Vector_database). At the moment only used by [**Immich**](https://immich.app/).
