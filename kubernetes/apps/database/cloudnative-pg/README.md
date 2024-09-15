@@ -69,7 +69,7 @@
 
 ### postgres16
 
-Main PostgreSQL cluster on major version `16`. Hosts most application databases.
+Primary PostgreSQL cluster on major version `16`. Hosts most application databases.
 
 ### pgvectors
 
