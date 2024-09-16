@@ -32,7 +32,7 @@ In order to reset all tables to a clean starting point before importing the SQLi
 psql -h postgres.${SECRET_DOMAIN} -U postgres
 ```
 
-```
+```sql
 DROP DATABASE "radarr_main";
 DROP DATABASE "radarr_log";
 CREATE DATABASE "radarr_main";
