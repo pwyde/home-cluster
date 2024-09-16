@@ -6,3 +6,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./cyberchef/ks.yaml
+  - ./it-tools/ks.yaml
