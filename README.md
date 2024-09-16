@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./docs/assets/logo.png" width="144px" height="144px"/>
+<img src="./docs/assets/img/logo.png" width="144px" height="144px"/>
 
 # My Home(lab) Kubernetes Cluster :sailboat:
 
