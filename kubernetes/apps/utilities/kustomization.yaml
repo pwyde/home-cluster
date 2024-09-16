@@ -7,3 +7,4 @@ resources:
   # Flux-Kustomizations
   - ./cyberchef/ks.yaml
   - ./it-tools/ks.yaml
+  - ./jsoncrack/ks.yaml
