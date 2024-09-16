@@ -73,4 +73,4 @@ Primary PostgreSQL cluster on major version `16`. Hosts most application databas
 
 ### pgvectors
 
-Special cluster with the [`pgvecto.rs`](https://github.com/tensorchord/cloudnative-pgvecto.rs) extension. Used by applications that require a [**vector database**](https://en.wikipedia.org/wiki/Vector_database). At the moment only used by [**Immich**](https://immich.app/).
+Special cluster with the [`pgvecto.rs`](https://github.com/tensorchord/cloudnative-pgvecto.rs) extension. Used by applications that require a [**vector database**](https://en.wikipedia.org/wiki/Vector_database). At the moment only used by [Immich](../../media/immich/).
