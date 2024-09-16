@@ -10,4 +10,6 @@
 
 ### Undeclared Keys
 
-Undeclared keys is enabled in the cluster with `--default_lua_flags=allow-undeclared-keys` argument. This is generally not recommended and not optimal. Accessing undeclared keys from scripts is disabled by default in Dragonfly for this reason. Immich does however use Redis via BullMQ to manage job queues and must therefore be allowed. For more information, see [Dragonfly](https://www.dragonflydb.io/docs/integrations/bullmq#using-undeclared-keys-not-optimized) and [Immich](https://immich.app/docs/developer/architecture#redis) documentation.
+Undeclared keys are enabled in the cluster using the `--default_lua_flags=allow-undeclared-keys` argument. This configuration is generally not recommended and may lead to suboptimal performance. By default, Dragonfly disables access to undeclared keys in scripts for this reason. However, [Immich](../../media/immich/) uses Redis through BullMQ to manage job queues, and therefore requires undeclared keys to be allowed.
+
+For more information, refer to the [Dragonfly documentation](https://www.dragonflydb.io/docs/integrations/bullmq#using-undeclared-keys-not-optimized) and the [Immich documentation](https://immich.app/docs/developer/architecture#redis).
