@@ -5,6 +5,7 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./pvc.yaml
+  - ../../../../templates/gatus/internal
 configMapGenerator:
   - name: immich-config
     files:
