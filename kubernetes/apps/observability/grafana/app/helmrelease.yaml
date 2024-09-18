@@ -329,7 +329,8 @@ spec:
           # renovate: depName="NVIDIA DCGM Exporter Dashboard"
           gnetId: 21362
           revision: 1
-          datasource: Prometheus
+          datasource:
+            - { name: DS_VICTORIAMETRICS, value: Prometheus }
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
