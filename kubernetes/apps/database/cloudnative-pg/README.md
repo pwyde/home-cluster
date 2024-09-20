@@ -19,7 +19,7 @@
     }
     ```
 
-2. Create the cloudnative-pg bucket user and password.
+2. Create the `cloudnative-pg` bucket user and password.
 
     ```sh
     export BUCKET_PASSWORD="$(openssl rand -hex 20)"
@@ -59,7 +59,7 @@
     mcli admin policy create minio cloudnative-pg-private ~/.mcli/cloudnative-pg-user-policy.json
     ```
 
-6. Associate private policy with the user.
+6. Associate private policy with the `cloudnative-pg` bucket user.
 
     ```sh
     mcli admin policy attach minio cloudnative-pg-private --user cloudnative-pg
@@ -162,10 +162,10 @@ flux suspend -n namespace helmrelease appName
 flux suspend -n flux-system kustomization appName
 ```
 
-Delete application pod.
+Delete application deployments.
 
 ```sh
-kubectl -n namespace delete pods appName-6575d69d85-q9bn6
+kubectl -n namespace delete deployments appName
 ```
 
 Get the name of the primary PostgreSQL cluster node.
@@ -186,7 +186,7 @@ Connect to the primary PostgreSQL cluster node.
 kubectl -n database exec -it postgres16-1 -- psql -U postgres
 ```
 
- Drop and re-create the database.
+Drop and re-create the database.
 
  ```sql
 DROP DATABASE dbName;
@@ -195,7 +195,7 @@ ALTER DATABASE dbName OWNER TO dbOwner;
 \q
  ```
 
- Restore the database from dump.
+Restore the database from dump.
 
  ```sh
 kubectl cp ./dbName_backup.sql database/postgres16-1:/var/lib/postgresql/data/dbName_backup.sql
@@ -232,7 +232,7 @@ Delete `postgres16-recovery` cluster.
 kubectl delete -f kubernetes/apps/database/cloudnative-pg/cluster/postgres16/postgres16-recovery.yaml
 ```
 
-Delete released `persistentvolume`.
+Delete the released `persistentvolume`.
 
 ```
 kubectl get persistentvolumes -A
