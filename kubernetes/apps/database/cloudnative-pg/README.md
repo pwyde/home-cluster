@@ -2,9 +2,10 @@
 
 ## S3 Configuration
 
-1. Create `~/.mcli/config.json`.
+1. Create the Minio CLI configuration file `~/.mcli/config.json`.
 
-    ```json
+    ```sh
+    cat <<EOF > ~/.mcli/config.json
     {
         "version": "10",
         "aliases": {
@@ -17,6 +18,7 @@
             }
         }
     }
+    EOF
     ```
 
 2. Create the `cloudnative-pg` bucket user and password.
@@ -26,15 +28,16 @@
     mcli admin user add minio cloudnative-pg "${BUCKET_PASSWORD}"
     ```
 
-3. Create the CloudNativePG bucket.
+3. Create the bucket for CloudNativePG.
 
     ```sh
     mcli mb minio/cloudnative-pg
     ```
 
-4. Create `~/.mcli/cloudnative-pg-user-policy.json`
+4. Create the user policy `~/.mcli/cloudnative-pg-user-policy.json`
 
-    ```json
+    ```sh
+    cat <<EOF > ~/.mcli/cloudnative-pg-user-policy.json
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -51,6 +54,7 @@
             }
         ]
     }
+    EOF
     ```
 
 5. Apply the bucket policies.
