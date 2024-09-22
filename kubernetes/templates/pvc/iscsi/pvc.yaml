@@ -7,9 +7,9 @@ metadata:
   annotations:
     volume.beta.kubernetes.io/storageClassName: "truenas-ssd-iscsi"
 spec:
-  storageClassName: truenas-ssd-iscsi
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: ${PVC_CAPACITY:-1Gi}
+  storageClassName: truenas-ssd-iscsi

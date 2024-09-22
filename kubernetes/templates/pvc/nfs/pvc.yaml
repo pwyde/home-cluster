@@ -7,9 +7,9 @@ metadata:
   annotations:
     volume.beta.kubernetes.io/storageClassName: "truenas-ssd-nfs"
 spec:
-  storageClassName: truenas-ssd-nfs
   accessModes:
     - ReadWriteMany
   resources:
     requests:
       storage: ${PVC_CAPACITY:-1Gi}
+  storageClassName: truenas-ssd-nfs
