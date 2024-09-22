@@ -160,7 +160,7 @@ spec:
           http:
             port: 3003
     serviceMonitor:
-      immich:
+      app:
         serviceName: *app
         endpoints:
           - port: metrics-api
@@ -182,14 +182,17 @@ spec:
         className: internal
         hosts:
           - host: *host
-            paths:
+            paths: &paths
               - path: /
                 service:
-                  identifier: immich
+                  identifier: *app
                   port: http
+          - host: &customHost foto.${SECRET_DOMAIN}
+            paths: *paths
         tls:
           - hosts:
               - *host
+              - *customHost
     persistence:
       cache:
         existingClaim: immich-cache
