@@ -62,10 +62,10 @@ spec:
           fsType: ext4
           # If true, volumes created from other snapshots will be
           # zfs send/received instead of zfs cloned.
-          detachedVolumesFromSnapshots: true
+          detachedVolumesFromSnapshots: false
           # If true, volumes created from other volumes will be
           # zfs send/received instead of zfs cloned.
-          detachedVolumesFromVolumes: true
+          detachedVolumesFromVolumes: false
         mountOptions: []
         secrets:
           provisioner-secret:
