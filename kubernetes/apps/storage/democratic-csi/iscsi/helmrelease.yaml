@@ -90,7 +90,7 @@ spec:
         deletionPolicy: Delete
         parameters:
           # If true, snapshots will be created with zfs send/receive.
-          detachedSnapshots: true
+          detachedSnapshots: false
         # secrets:
         #   snapshotter-secret:
     driver:
