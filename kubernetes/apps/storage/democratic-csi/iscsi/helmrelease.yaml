@@ -24,10 +24,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # See https://github.com/democratic-csi/democratic-csi#talos
+    controller:
+      driver:
+        image: ghcr.io/democratic-csi/democratic-csi:v1.9.3
+      priorityClassName: system-cluster-critical
     node:
       hostPID: true
+      cleanup:
+        image: public.ecr.aws/docker/library/busybox:1.36.1
       driver:
+        image: ghcr.io/democratic-csi/democratic-csi:v1.9.3
+        # See https://github.com/democratic-csi/democratic-csi#talos
         extraEnv:
           - name: ISCSIADM_HOST_STRATEGY
             value: nsenter
@@ -35,6 +42,9 @@ spec:
             value: /usr/local/sbin/iscsiadm
         iscsiDirHostPath: /usr/local/etc/iscsi
         iscsiDirHostPathType: ""
+      priorityClassName: system-node-critical
+    csiProxy:
+      image: ghcr.io/democratic-csi/csi-grpc-proxy:v0.5.6
     csiDriver:
       # Should be globally unique for a given cluster.
       name: org.democratic-csi.iscsi
