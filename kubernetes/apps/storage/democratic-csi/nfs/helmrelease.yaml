@@ -29,7 +29,7 @@ spec:
       name: "org.democratic-csi.nfs"
     storageClasses:
       - name: truenas-ssd-nfs
-        defaultClass: true
+        defaultClass: false
         # reclaimPolicy: Delete
         # Set to Retain so PVC will be left alone on delete.
         reclaimPolicy: Retain
@@ -41,10 +41,10 @@ spec:
           fsType: nfs
           # If true, volumes created from other snapshots will be
           # zfs send/received instead of zfs cloned.
-          detachedVolumesFromSnapshots: "false"
+          detachedVolumesFromSnapshots: true
           # If true, volumes created from other volumes will be
           # zfs send/received instead of zfs cloned.
-          # detachedVolumesFromVolumes: "false"
+          detachedVolumesFromVolumes: true
         mountOptions:
           - nfsvers=4.2
           - nconnect=8
@@ -58,15 +58,15 @@ spec:
           node-publish-secret:
           controller-expand-secret:
     # If your cluster supports snapshots you may enable below.
-    # volumeSnapshotClasses:
-    # - name: truenas-ssd-nfs
-    #   driver: org.democratic-csi.nfs-ssd
-    #   deletionPolicy: Delete
-    #   parameters:
-    #     # If true, snapshots will be created with zfs send/receive.
-    #     detachedSnapshots: "true"
-    #   secrets:
-    #     snapshotter-secret:
+    volumeSnapshotClasses:
+      - name: truenas-ssd-nfs
+        driver: org.democratic-csi.nfs
+        deletionPolicy: Delete
+        parameters:
+          # If true, snapshots will be created with zfs send/receive.
+          detachedSnapshots: true
+        # secrets:
+        #   snapshotter-secret:
     driver:
       config:
         # Please see the most up-to-date example of the corresponding config here:
