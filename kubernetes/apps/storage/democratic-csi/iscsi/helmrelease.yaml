@@ -81,8 +81,8 @@ spec:
         parameters:
           # If true, snapshots will be created with zfs send/receive.
           detachedSnapshots: true
-        secrets:
-          snapshotter-secret:
+        # secrets:
+        #   snapshotter-secret:
     driver:
       config:
         # Please see the most up-to-date example of the corresponding config here:
