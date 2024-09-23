@@ -37,7 +37,7 @@ spec:
         iscsiDirHostPathType: ""
     csiDriver:
       # Should be globally unique for a given cluster.
-      name: org.democratic-csi.iscsi-ssd
+      name: org.democratic-csi.iscsi
     storageClasses:
       - name: truenas-ssd-iscsi
         defaultClass: true
@@ -74,7 +74,7 @@ spec:
     # If your cluster supports snapshots you may enable below.
     volumeSnapshotClasses:
       - name: truenas-ssd-iscsi
-        driver: org.democratic-csi.iscsi-ssd
+        driver: org.democratic-csi.iscsi
         annotations:
           snapshot.storage.kubernetes.io/is-default-class: "true"
         deletionPolicy: Delete
