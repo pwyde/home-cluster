@@ -28,7 +28,7 @@ spec:
       APP_UID: &uid "5000"
       APP_GID: *uid
       NAMESPACE: *ns
-      VOLSYNC_CLAIM: ${APP}-data
+      VOLSYNC_CLAIM: navidrome-test-data
       VOLSYNC_CAPACITY: &capacity 5Gi
       VOLSYNC_CACHE_CAPACITY: *capacity
       VOLSYNC_STORAGECLASS: &storageClass truenas-ssd-iscsi
@@ -36,4 +36,4 @@ spec:
       VOLSYNC_CACHE_SNAPSHOTCLASS: *storageClass
       VOLSYNC_ACCESSMODES: &accessModes ReadWriteOnce
       VOLSYNC_CACHE_ACCESSMODES: *accessModes
-      VOLSYNC_TIME: 05 12 * * *
+      VOLSYNC_TIME: 08 12 * * *
