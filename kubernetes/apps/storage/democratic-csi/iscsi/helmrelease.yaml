@@ -27,7 +27,6 @@ spec:
     # See https://github.com/democratic-csi/democratic-csi#talos
     node:
       hostPID: true
-      cleanup:
       driver:
         extraEnv:
           - name: ISCSIADM_HOST_STRATEGY
