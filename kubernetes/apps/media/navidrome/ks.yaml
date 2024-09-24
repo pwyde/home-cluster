@@ -9,6 +9,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: democratic-csi-iscsi
+    - name: external-secrets-stores
+    - name: volsync
   path: ./kubernetes/apps/media/navidrome/app
   prune: true
   sourceRef:
@@ -21,3 +25,14 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      APP_UID: &uid "5000"
+      APP_GID: *uid
+      VOLSYNC_CLAIM: navitest-data
+      VOLSYNC_ACCESSMODES: &accessModes ReadWriteOnce
+      VOLSYNC_STORAGECLASS: &storageClass truenas-ssd-iscsi
+      VOLSYNC_SNAPSHOTCLASS: *storageClass
+      VOLSYNC_CACHE_ACCESSMODES: *accessModes
+      VOLSYNC_CACHE_SNAPSHOTCLASS: *storageClass
+      VOLSYNC_CAPACITY: &capacity 2Gi
+      VOLSYNC_CACHE_CAPACITY: *capacity
+      VOLSYNC_TIME: "0 3 * * *"
