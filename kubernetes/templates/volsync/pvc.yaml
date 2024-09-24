@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ${VOLSYNC_CLAIM:-${APP}}
+  name: "${VOLSYNC_CLAIM:-${APP}}"
 spec:
   accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-  storageClassName: ${VOLSYNC_STORAGECLASS:-truenas-ssd-iscsi}
+  storageClassName: "${VOLSYNC_STORAGECLASS:-truenas-ssd-iscsi}"
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: ${APP}-rdst
+    name: "${APP}-rdst"
   resources:
     requests:
-      storage: ${VOLSYNC_CAPACITY:-1Gi}
+      storage: "${VOLSYNC_CAPACITY:-1Gi}"

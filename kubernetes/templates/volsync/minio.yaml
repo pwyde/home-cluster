@@ -2,7 +2,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: &name ${APP}-volsync-secret
+  name: &name "${APP}-volsync-secret"
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -26,13 +26,13 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: ${APP}-rsrc
+  name: "${APP}-rsrc"
 spec:
   sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   trigger:
     schedule: "${VOLSYNC_TIME:-0 0 * * *}"
   restic:
-    repository: ${APP}-volsync-secret
+    repository: "${APP}-volsync-secret"
     copyMethod: Snapshot
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-truenas-ssd-iscsi}"
@@ -42,9 +42,9 @@ spec:
     capacity: "${VOLSYNC_CAPACITY:-1Gi}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
     moverSecurityContext:
-      runAsUser: ${APP_UID:-5000}
-      runAsGroup: ${APP_GID:-5000}
-      fsGroup: ${APP_GID:-5000}
+      runAsUser: "${APP_UID:-5000}"
+      runAsGroup: "${APP_GID:-5000}"
+      fsGroup: "${APP_GID:-5000}"
     pruneIntervalDays: 7
     retain:
       daily: 7
@@ -54,12 +54,12 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: ${APP}-rdst
+  name: "${APP}-rdst"
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: ${APP}-volsync-secret
+    repository: "${APP}-volsync-secret"
     copyMethod: Snapshot
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-truenas-ssd-iscsi}"
@@ -69,6 +69,6 @@ spec:
     capacity: "${VOLSYNC_CAPACITY:-1Gi}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-1Gi}"
     moverSecurityContext:
-      runAsUser: ${APP_UID:-5000}
-      runAsGroup: ${APP_GID:-5000}
-      fsGroup: ${APP_GID:-5000}
+      runAsUser: "${APP_UID:-5000}"
+      runAsGroup: "${APP_GID:-5000}"
+      fsGroup: "${APP_GID:-5000}"
