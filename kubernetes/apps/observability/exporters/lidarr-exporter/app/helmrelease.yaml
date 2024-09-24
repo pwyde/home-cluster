@@ -40,7 +40,7 @@ spec:
               - --enable-unknown-queue-items
             env:
               PORT: &port 9707
-              URL: http://lidarr.media.svc.cluster.local:80
+              URL: http://lidarr.download.svc.cluster.local:80
             envFrom:
               - secretRef:
                   name: lidarr-exporter-secret
