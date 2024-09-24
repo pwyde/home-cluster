@@ -1,0 +1,122 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app navitest
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      navitest:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          navitest:
+            image:
+              repository: ghcr.io/navidrome/navidrome
+              tag: 0.53.2@sha256:28235e52c2066908f0642a28ad1f9a673179d5754eafe427436261282c100fce
+            env:
+              TZ: ${TIMEZONE}
+              ND_LOGLEVEL: info
+              ND_DATAFOLDER: /data
+              ND_CACHEFOLDER: /data/cache
+              ND_MUSICFOLDER: /music
+              ND_AUTOIMPORTPLAYLISTS: false
+              ND_ARTISTARTPRIORITY: 'folder.*, external'
+              ND_COVERARTPRIORITY: 'folder.*, cover.*, embedded, external'
+              ND_DEFAULTLANGUAGE: 'en'
+              ND_DEFAULTTHEME: 'Spotify-ish'
+              ND_IMAGECACHESIZE: '512MB'
+              ND_PROMETHEUS_ENABLED: true
+              ND_SCANSCHEDULE: '@every 1h'
+              ND_SESSIONTIMEOUT: '72h'
+              ND_TRANSCODINGCACHESIZE: '512MB'
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: &port 4533
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            # resources:
+            #   requests:
+            #     cpu: 100m
+            #     memory: 250Mi
+            #   limits:
+            #     memory: 550Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: &uid 5000
+        runAsGroup: *uid
+        fsGroup: *uid
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [4000]
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      app:
+        serviceName: *app
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: &host navitest.${SECRET_DOMAIN}
+        className: internal
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      data:
+        existingClaim: navitest-data
+      music:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: ${NFS_PATH_MUSIC}
+        globalMounts:
+          - path: /music
+            readOnly: true
