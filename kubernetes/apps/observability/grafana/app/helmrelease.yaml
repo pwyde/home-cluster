@@ -324,6 +324,13 @@ spec:
           revision: 26
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        volsync:
+          # renovate: depName="Volsync"
+          gnetId: 21356
+          revision: 3
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
+            - {name: VAR_REPLICATIONDESTNAME, value: ".*-rdst"}
       system:
         dcgm-exporter:
           # renovate: depName="NVIDIA DCGM Exporter Dashboard"
