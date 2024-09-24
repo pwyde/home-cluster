@@ -40,21 +40,23 @@ spec:
     storageClasses:
       - name: truenas-ssd-nfs
         defaultClass: false
-        # reclaimPolicy: Delete
+        reclaimPolicy: Delete
         # Set to Retain so PVC will be left alone on delete.
-        reclaimPolicy: Retain
+        # reclaimPolicy: Retain
         volumeBindingMode: Immediate
         allowVolumeExpansion: true
         parameters:
           # For block-based storage, can be ext3, ext4, xfs...
-          # Should be fns for nfs.
+          # For nfs should be nfs.
           fsType: nfs
           # If true, volumes created from other snapshots will be
           # zfs send/received instead of zfs cloned.
-          detachedVolumesFromSnapshots: true
+          # Note: Must be set to false on encrypted datasets.
+          detachedVolumesFromSnapshots: false
           # If true, volumes created from other volumes will be
           # zfs send/received instead of zfs cloned.
-          detachedVolumesFromVolumes: true
+          # Note: Must be set to false on encrypted datasets.
+          detachedVolumesFromVolumes: false
         mountOptions:
           - nfsvers=4.2
           - nconnect=8
