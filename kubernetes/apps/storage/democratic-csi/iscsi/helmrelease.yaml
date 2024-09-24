@@ -62,9 +62,11 @@ spec:
           fsType: ext4
           # If true, volumes created from other snapshots will be
           # zfs send/received instead of zfs cloned.
+          # Note: Must be set to false on encrypted datasets.
           detachedVolumesFromSnapshots: false
           # If true, volumes created from other volumes will be
           # zfs send/received instead of zfs cloned.
+          # Note: Must be set to false on encrypted datasets.
           detachedVolumesFromVolumes: false
         mountOptions: []
         secrets:
@@ -164,7 +166,7 @@ spec:
           targetGroups:
             # Get the correct ID from the "portal" section in the TrueNAS UI.
             # https://github.com/democratic-csi/democratic-csi/issues/302
-            # NOTE: the ID in the TrueNAS UI does NOT always match the ID in the DB,
+            # Note: the ID in the TrueNAS UI does NOT always match the ID in the DB,
             # you must use the DB value.
             - targetGroupPortalGroup: 2
               # Get the correct ID from the "Initiators" section in the TrueNAS UI.
