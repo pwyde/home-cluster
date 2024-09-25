@@ -14,7 +14,6 @@ resources:
   - ./jellyseerr/ks.yaml
   - ./jellystat/ks.yaml
   - ./navidrome/ks.yaml
-  - ./prowlarr/ks.yaml
   - ./radarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sonarr/ks.yaml

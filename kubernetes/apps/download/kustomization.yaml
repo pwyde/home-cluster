@@ -7,4 +7,5 @@ resources:
   # Flux-Kustomizations
   - ./lidarr/ks.yaml
   - ./pinchflat/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
