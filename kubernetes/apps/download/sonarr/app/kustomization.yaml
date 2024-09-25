@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./pvc.yaml
   - ../../../../templates/gatus/internal
+  - ../../../../templates/volsync
 configMapGenerator:
   - name: sonarr-scripts
     files:
