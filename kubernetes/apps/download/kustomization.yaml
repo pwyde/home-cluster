@@ -9,4 +9,3 @@ resources:
   - ./pinchflat/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./recyclarr/ks.yaml
-  - ./unpackerr/ks.yaml
