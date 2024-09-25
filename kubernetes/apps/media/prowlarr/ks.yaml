@@ -5,7 +5,7 @@ metadata:
   name: &app prowlarr
   namespace: flux-system
 spec:
-  targetNamespace: download
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -14,7 +14,7 @@ spec:
     - name: democratic-csi-nfs
     - name: external-secrets-stores
     - name: volsync
-  path: ./kubernetes/apps/download/prowlarr/app
+  path: ./kubernetes/apps/media/prowlarr/app
   prune: true
   sourceRef:
     kind: GitRepository
