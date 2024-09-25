@@ -9,7 +9,6 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./pinchflat/ks.yaml
   - ./qbittorrent/ks.yaml
-  - ./radarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sonarr/ks.yaml
   - ./unpackerr/ks.yaml
