@@ -12,4 +12,4 @@ resources:
   - ./jellyseerr/ks.yaml
   - ./jellystat/ks.yaml
   - ./navidrome/ks.yaml
-  - ./recyclarr/ks.yaml
+  
