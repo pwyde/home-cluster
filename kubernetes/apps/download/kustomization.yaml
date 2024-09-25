@@ -8,4 +8,3 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./pinchflat/ks.yaml
   - ./qbittorrent/ks.yaml
-  - ./recyclarr/ks.yaml

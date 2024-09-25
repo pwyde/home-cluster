@@ -12,7 +12,7 @@ sonarr:
   #   * (In the future) On the CLI it allows executing actions against specific instances.
   tv_series:
     # Set the URL/API Key to the actual instance.
-    base_url: http://sonarr.download.svc.cluster.local
+    base_url: http://sonarr.media.svc.cluster.local
     api_key: !env_var SONARR_API_KEY
 
     # Quality definitions from the guide to sync to Sonarr. Choices: series, anime
@@ -166,7 +166,7 @@ sonarr:
 radarr:
   movies:
     # Set the URL/API Key to the actual instance.
-    base_url: http://radarr.download.svc.cluster.local
+    base_url: http://radarr.media.svc.cluster.local
     api_key: !env_var RADARR_API_KEY
 
     # Quality definitions from the guide to sync to Radarr. Choices: movie

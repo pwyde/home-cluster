@@ -5,7 +5,7 @@ metadata:
   name: &app recyclarr
   namespace: flux-system
 spec:
-  targetNamespace: download
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -13,7 +13,7 @@ spec:
     - name: democratic-csi-nfs
     - name: external-secrets-stores
     - name: volsync
-  path: ./kubernetes/apps/download/recyclarr/app
+  path: ./kubernetes/apps/media/recyclarr/app
   prune: true
   sourceRef:
     kind: GitRepository
