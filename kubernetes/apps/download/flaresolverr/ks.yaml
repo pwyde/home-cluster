@@ -5,11 +5,11 @@ metadata:
   name: &app flaresolverr
   namespace: flux-system
 spec:
-  targetNamespace: media
+  targetNamespace: download
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/media/flaresolverr/app
+  path: ./kubernetes/apps/download/flaresolverr/app
   prune: true
   sourceRef:
     kind: GitRepository
