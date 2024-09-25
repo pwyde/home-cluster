@@ -5,7 +5,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./bazarr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./pinchflat/ks.yaml
   - ./qbittorrent/ks.yaml
