@@ -13,4 +13,3 @@ resources:
   - ./jellystat/ks.yaml
   - ./navidrome/ks.yaml
   - ./recyclarr/ks.yaml
-  - ./unpackerr/ks.yaml
