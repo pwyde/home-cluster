@@ -10,7 +10,9 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
+    - name: democratic-csi-nfs
     - name: external-secrets-stores
+    - name: volsync
   path: ./kubernetes/apps/download/qbittorrent/app
   prune: true
   sourceRef:
@@ -23,4 +25,15 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      APP_UID: &uid "5000"
+      APP_GID: *uid
+      VOLSYNC_CLAIM: qbittorrent-config
+      VOLSYNC_ACCESSMODES: &accessModes ReadWriteOnce
+      VOLSYNC_STORAGECLASS: &storageClass truenas-ssd-nfs
+      VOLSYNC_SNAPSHOTCLASS: *storageClass
+      VOLSYNC_CACHE_ACCESSMODES: *accessModes
+      VOLSYNC_CACHE_SNAPSHOTCLASS: *storageClass
+      VOLSYNC_CAPACITY: &capacity 1Gi
+      VOLSYNC_CACHE_CAPACITY: *capacity
+      VOLSYNC_TIME: "15 3 * * *"
       GATUS_SUBDOMAIN: qbit

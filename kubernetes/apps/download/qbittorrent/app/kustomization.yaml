@@ -4,9 +4,9 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./pvc.yaml
-  - ./qbittorrent-categories-secret.sops.yaml
+  - ./resources/qbittorrent-categories-secret.sops.yaml
   - ../../../../templates/gatus/internal
+  - ../../../../templates/volsync
 configMapGenerator:
   - name: qbittorrent-loki-rules
     files:
