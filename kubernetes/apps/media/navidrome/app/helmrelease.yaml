@@ -102,14 +102,17 @@ spec:
         className: internal
         hosts:
           - host: *host
-            paths:
+            paths: &paths
               - path: /
                 service:
                   identifier: app
                   port: http
+          - host: &customHost musik.${SECRET_DOMAIN}
+            paths: *paths
         tls:
           - hosts:
               - *host
+              - *customHost
     persistence:
       data:
         existingClaim: navidrome-data
