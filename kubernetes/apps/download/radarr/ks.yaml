@@ -14,7 +14,7 @@ spec:
     - name: democratic-csi-nfs
     - name: external-secrets-stores
     - name: volsync
-  path: ./kubernetes/apps/download/download/app
+  path: ./kubernetes/apps/download/radarr/app
   prune: true
   sourceRef:
     kind: GitRepository
