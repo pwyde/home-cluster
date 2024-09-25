@@ -279,11 +279,6 @@ spec:
         blackbox-exporter-icmp:
           url: https://raw.githubusercontent.com/pwyde/home-cluster/main/kubernetes/apps/observability/grafana/app/resources/blackbox-exporter-icmp-dashboard.json
           datasource: Prometheus
-        cert-manager:
-          # Missing data legends, see https://github.com/monitoring-mixins/website/issues/37
-          # url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
-          url: https://raw.githubusercontent.com/pwyde/home-cluster/main/kubernetes/apps/observability/grafana/app/resources/cert-manager-dashboard.json
-          datasource: Prometheus
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
@@ -308,6 +303,11 @@ spec:
           revision: 3
           datasource: Prometheus
       security:
+        cert-manager:
+          # Missing data legends, see https://github.com/monitoring-mixins/website/issues/37
+          # url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          url: https://raw.githubusercontent.com/pwyde/home-cluster/main/kubernetes/apps/observability/grafana/app/resources/cert-manager-dashboard.json
+          datasource: Prometheus
         external-secrets:
           # renovate: depName="External Secrets"
           gnetId: 21640
