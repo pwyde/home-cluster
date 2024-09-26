@@ -9,7 +9,7 @@ spec:
   subject:
     organizations:
       - ${SECRET_DOMAIN}
-  secretName: root-secret
+  secretName: *name
   privateKey:
     algorithm: ECDSA
     size: 256
@@ -28,7 +28,7 @@ spec:
   subject:
     organizations:
       - ${SECRET_DOMAIN}
-  secretName: strong-root-secret
+  secretName: *name
   privateKey:
     algorithm: ECDSA
     size: 384

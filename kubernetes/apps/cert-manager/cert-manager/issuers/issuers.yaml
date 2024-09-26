@@ -12,7 +12,7 @@ spec:
       - dns01:
           cloudflare:
             apiTokenSecretRef:
-              name: cloudflare-secret
+              name: cloudflare
               key: CLOUDFLARE_API_TOKEN
         selector:
           dnsZones:
@@ -32,7 +32,7 @@ spec:
       - dns01:
           cloudflare:
             apiTokenSecretRef:
-              name: cloudflare-secret
+              name: cloudflare
               key: CLOUDFLARE_API_TOKEN
         selector:
           dnsZones:
@@ -51,7 +51,7 @@ metadata:
   name: home-ca-issuer
 spec:
   ca:
-    secretName: root-secret
+    secretName: home-selfsigned-ca
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -59,4 +59,4 @@ metadata:
   name: strong-ca-issuer
 spec:
   ca:
-    secretName: strong-root-secret
+    secretName: strong-selfsigned-ca
