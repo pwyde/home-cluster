@@ -90,7 +90,7 @@ spec:
           - hosts:
               - *host
     persistence:
-      config:
-        existingClaim: dokuwiki-storage
+      storage:
+        existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /storage
