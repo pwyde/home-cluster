@@ -92,7 +92,7 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: pinchflat-config
+        existingClaim: ${VOLSYNC_CLAIM}
       tmp:
         type: emptyDir
       downloads:
