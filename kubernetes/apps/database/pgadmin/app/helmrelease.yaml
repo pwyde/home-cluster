@@ -39,7 +39,7 @@ spec:
               PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
             envFrom:
               - secretRef:
-                  name: pgadmin-secret
+                  name: pgadmin
             probes:
               liveness: &probes
                 enabled: true
