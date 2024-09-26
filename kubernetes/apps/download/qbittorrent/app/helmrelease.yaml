@@ -224,7 +224,7 @@ spec:
       addons:
         type: emptyDir
       config:
-        existingClaim: qbittorrent-config
+        existingClaim: ${VOLSYNC_CLAIM}
       config-categories:
         type: secret
         name: qbittorrent-categories-secret
