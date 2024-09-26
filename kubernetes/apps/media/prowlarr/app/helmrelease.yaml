@@ -108,6 +108,6 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: prowlarr-config
+        existingClaim: ${VOLSYNC_CLAIM}
       tmp:
         type: emptyDir
