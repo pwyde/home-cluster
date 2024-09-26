@@ -115,7 +115,7 @@ spec:
     size: 20Gi
     storageClass: truenas-ssd-iscsi
   superuserSecret:
-    name: cloudnative-pg-secret
+    name: cloudnative-pg
   enableSuperuserAccess: true
   postgresql:
     parameters:
