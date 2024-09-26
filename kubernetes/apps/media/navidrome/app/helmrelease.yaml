@@ -114,8 +114,8 @@ spec:
               - *host
               - *customHost
     persistence:
-      data:
-        existingClaim: navidrome-data
+      config:
+        existingClaim: ${VOLSYNC_CLAIM}
       music:
         type: nfs
         server: ${TRUENAS_IP}
