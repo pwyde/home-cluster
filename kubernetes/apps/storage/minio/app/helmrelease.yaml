@@ -49,7 +49,7 @@ spec:
               MINIO_UPDATE: "off"
             envFrom:
               - secretRef:
-                  name: minio-secret
+                  name: *app
             args: ["server", "/data", "--console-address", ":9001"]
             probes:
               liveness: &probes
@@ -58,7 +58,7 @@ spec:
                 spec:
                   httpGet:
                     path: /minio/health/live
-                    port: 9000
+                    port: &port 9000
                   initialDelaySeconds: 30
                   periodSeconds: 30
                   timeoutSeconds: 10
@@ -70,7 +70,7 @@ spec:
                 spec:
                   httpGet:
                     path: /minio/health/live
-                    port: 9000
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 5
                   timeoutSeconds: 10
@@ -99,7 +99,7 @@ spec:
           http:
             port: 9001
           s3:
-            port: 9000
+            port: *port
     serviceMonitor:
       app:
         serviceName: *app
