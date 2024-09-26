@@ -53,7 +53,7 @@ spec:
               - *host
       alertmanagerSpec:
         useExistingSecret: true
-        configSecret: alertmanager-secret
+        configSecret: alertmanager
         resources:
           requests:
             cpu: 50m
