@@ -6,7 +6,7 @@ resources:
   - ./dnsendpoint.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: cloudflared-configmap
+  - name: cloudflared-config
     files:
       - ./configs/config.yaml
 generatorOptions:
