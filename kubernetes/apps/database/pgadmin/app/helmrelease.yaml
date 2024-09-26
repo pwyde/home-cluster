@@ -99,8 +99,8 @@ spec:
           - path: /pgadmin4/servers.json
             subPath: servers.json
             readOnly: true
-      data:
-        existingClaim: pgadmin-data
+      pgadmin:
+        existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /var/lib/pgadmin
 
