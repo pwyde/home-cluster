@@ -94,6 +94,6 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: jellyseerr-config
+        existingClaim: ${VOLSYNC_CLAIM}
       tmp:
         type: emptyDir
