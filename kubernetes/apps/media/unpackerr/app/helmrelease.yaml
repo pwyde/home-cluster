@@ -46,7 +46,7 @@ spec:
               UN_WEBSERVER_LOG_FILE: /logs/webserver.log
             envFrom:
               - secretRef:
-                  name: unpackerr-secret
+                  name: *app
             probes:
               liveness:
                 enabled: true
