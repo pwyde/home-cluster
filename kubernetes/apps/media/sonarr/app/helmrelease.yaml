@@ -109,7 +109,7 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: sonarr-config
+        existingClaim: ${VOLSYNC_CLAIM}
       media:
         type: nfs
         server: ${TRUENAS_IP}
