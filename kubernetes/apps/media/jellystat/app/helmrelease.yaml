@@ -36,7 +36,7 @@ spec:
               tag: 16
             envFrom: &envFrom
               - secretRef:
-                  name: jellystat-secret
+                  name: *app
         containers:
           jellystat:
             image:
