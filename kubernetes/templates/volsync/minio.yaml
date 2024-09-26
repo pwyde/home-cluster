@@ -2,7 +2,7 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: &name "${APP}-volsync-secret"
+  name: &name "${APP}-volsync"
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -32,7 +32,7 @@ spec:
   trigger:
     schedule: "${VOLSYNC_TIME:-0 0 * * *}"
   restic:
-    repository: "${APP}-volsync-secret"
+    repository: "${APP}-volsync"
     copyMethod: Snapshot
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-truenas-ssd-iscsi}"
@@ -59,7 +59,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: "${APP}-volsync-secret"
+    repository: "${APP}-volsync"
     copyMethod: Snapshot
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:-truenas-ssd-iscsi}"
