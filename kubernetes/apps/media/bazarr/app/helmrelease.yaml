@@ -120,7 +120,7 @@ spec:
       addons:
         type: emptyDir
       config:
-        existingClaim: bazarr-config
+        existingClaim: ${VOLSYNC_CLAIM}
       media:
         type: nfs
         server: ${TRUENAS_IP}
