@@ -102,7 +102,7 @@ spec:
         globalMounts:
           - path: /.npm
       config:
-        existingClaim: audiobookshelf-config
+        existingClaim: ${VOLSYNC_CLAIM}
       media:
         type: nfs
         server: ${TRUENAS_IP}
