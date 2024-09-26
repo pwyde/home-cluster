@@ -64,7 +64,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     persistence:
       config:
-        existingClaim: recyclarr-config
+        existingClaim: ${VOLSYNC_CLAIM}
       config-file:
         type: configMap
         name: recyclarr-config-file
