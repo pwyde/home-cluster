@@ -43,7 +43,7 @@ spec:
               URL: http://lidarr.media.svc.cluster.local:80
             envFrom:
               - secretRef:
-                  name: lidarr-exporter-secret
+                  name: *app
             probes:
               liveness:
                 enabled: true

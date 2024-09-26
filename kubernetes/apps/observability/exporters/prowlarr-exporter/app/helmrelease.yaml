@@ -42,7 +42,7 @@ spec:
               URL: http://prowlarr.media.svc.cluster.local:80
             envFrom:
               - secretRef:
-                  name: prowlarr-exporter-secret
+                  name: *app
             probes:
               liveness:
                 enabled: true

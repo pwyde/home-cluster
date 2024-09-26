@@ -43,7 +43,7 @@ spec:
               URL: http://bazarr.media.svc.cluster.local:6767
             envFrom:
               - secretRef:
-                  name: bazarr-exporter-secret
+                  name: *app
             probes:
               liveness:
                 enabled: true
