@@ -30,7 +30,7 @@ bootstrap:
     database: immich
     owner: immich
     secret:
-      name: immich-db-secret
+      name: immich-db
     postInitApplicationSQL:
       # List of SQL queries to be executed as superuser in the application
       # database right after it is created.
