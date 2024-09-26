@@ -42,7 +42,7 @@ spec:
               tag: 16@sha256:d373b8e2044198448277f9bc6616f981b0a18b1f7a1f767f6e14c9e6cfa42abf
             envFrom: &envFrom
               - secretRef:
-                  name: postgres-backup-secret
+                  name: *app
             env:
               TZ: ${TIMEZONE}
               POSTGRES_HOST: postgres16-ro.database.svc.cluster.local
