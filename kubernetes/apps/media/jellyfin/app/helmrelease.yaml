@@ -127,7 +127,7 @@ spec:
               - *host
     persistence:
       config:
-        existingClaim: jellyfin-config
+        existingClaim: ${VOLSYNC_CLAIM}
       media:
         type: nfs
         server: ${TRUENAS_IP}
