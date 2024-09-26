@@ -11,7 +11,7 @@ spec:
     size: 10Gi
     storageClass: truenas-ssd-iscsi
   superuserSecret:
-    name: cloudnative-pg-secret
+    name: cloudnative-pg
   enableSuperuserAccess: true
   postgresql:
     shared_preload_libraries:
@@ -46,10 +46,10 @@ spec:
       serverName: &currentCluster pgvectors-v1
       s3Credentials:
         accessKeyId:
-          name: cloudnative-pg-secret
+          name: cloudnative-pg
           key: s3-access-key
         secretAccessKey:
-          name: cloudnative-pg-secret
+          name: cloudnative-pg
           key: s3-secret-key
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster.
