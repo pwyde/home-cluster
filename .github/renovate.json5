@@ -215,7 +215,7 @@
     // cloudnative-pg
     {
       "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["postgresql"],
+      "matchPackagePatterns": ["postgresql", "postgres-backup-local"],
       "allowedVersions": "<17"
     }
   ],
