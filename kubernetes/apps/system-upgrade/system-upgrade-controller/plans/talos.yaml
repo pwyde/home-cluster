@@ -15,24 +15,10 @@ spec:
   exclusive: true
   nodeSelector:
     matchExpressions:
-      - key: feature.node.kubernetes.io/system-os_release.ID
+      - key: kubernetes.io/hostname
         operator: In
-        values: ["talos"]
-      - key: feature.node.kubernetes.io/system-os_release.VERSION_ID
-        operator: NotIn
-        values: ["${TALOS_VERSION}"]
-      - key: factory.talos.dev/schematic-id.part-0
-        operator: In
-        values: ["${TALOS_SCHEMATIC_ID:0:32}"]
-      - key: factory.talos.dev/schematic-id.part-1
-        operator: In
-        values: ["${TALOS_SCHEMATIC_ID:32}"]
-  tolerations:
-    - key: CriticalAddonsOnly
-      operator: Exists
-    - key: node-role.kubernetes.io/control-plane
-      operator: Exists
-      effect: NoSchedule
+        values:
+          - k8s-4
   prepare: &prepare
     image: ghcr.io/siderolabs/talosctl:${TALOS_VERSION}
     envs:
@@ -52,3 +38,4 @@ spec:
       - --image=factory.talos.dev/installer/${TALOS_SCHEMATIC_ID}:$(SYSTEM_UPGRADE_PLAN_LATEST_VERSION)
       - --preserve=true
       - --wait=false
+      - --reboot-mode=powercycle
