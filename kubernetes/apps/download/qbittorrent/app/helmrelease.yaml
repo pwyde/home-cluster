@@ -176,7 +176,9 @@ spec:
             resources:
               limits:
                 # Request the /dev/net/tun device that is exposed on the node
-                # using generic-device-plugin.
+                # using generic-device-plugin. For more information, see:
+                # - https://www.talos.dev/v1.8/introduction/what-is-new/#accessing-devnettun-in-kubernetes-pods
+                # - https://www.talos.dev/v1.8/kubernetes-guides/configuration/device-plugins/
                 squat.ai/tun: "1"
             probes:
               liveness: &probe
