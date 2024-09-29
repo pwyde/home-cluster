@@ -46,7 +46,10 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      TALOS_SCHEMATIC_ID: 2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+      # Talos schematic ID for standard (general-purpose) nodes.
+      TALOS_SCHEMATIC_ID_STANDARD: 2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+      # Talos schematic ID for nodes with NVIDIA GPU present.
+      TALOS_SCHEMATIC_ID_GPU: 3d572bade939d3fe0ca708c296bd33493987a49bc2f4cc7593d7cedb034750bc
       # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
       TALOS_VERSION: v1.7.7
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
