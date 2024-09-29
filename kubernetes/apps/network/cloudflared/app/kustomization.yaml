@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -8,6 +9,6 @@ resources:
 configMapGenerator:
   - name: cloudflared-config
     files:
-      - ./configs/config.yaml
+      - ./resources/config.yaml
 generatorOptions:
   disableNameSuffixHash: true
