@@ -58,6 +58,8 @@ spec:
         configSecret: alertmanager
         storage:
           volumeClaimTemplate:
+            metadata:
+              name: data
             spec:
               storageClassName: truenas-ssd-iscsi
               resources:
@@ -155,6 +157,8 @@ spec:
             memory: 1500Mi
         storageSpec:
           volumeClaimTemplate:
+            metadata:
+              name: data
             spec:
               storageClassName: truenas-ssd-iscsi
               resources:
