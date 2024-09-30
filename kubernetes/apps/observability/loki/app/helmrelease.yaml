@@ -15,6 +15,7 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
+  maxHistory: 2
   install:
     crds: Skip
     remediation:
