@@ -87,7 +87,7 @@ spec:
                 nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 # Disabled during initial import of photographs.
-                # memory: 2Gi
+                memory: 2Gi
                 nvidia.com/gpu: 1
       machine-learning:
         annotations: *annotations
@@ -119,8 +119,8 @@ spec:
                 cpu: 100m
                 memory: 2Gi
               # Disabled during initial import of photographs.
-              # limits:
-              #   memory: 4Gi
+              limits:
+                memory: 4Gi
     defaultPodOptions:
       priorityClassName: gpu-priority
       affinity:
