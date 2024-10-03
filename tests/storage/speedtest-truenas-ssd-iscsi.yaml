@@ -1,11 +1,4 @@
-# Test the provisioning, mounting, and performance of using a storage class:
-# kubectl apply -f ./tests/storage/speedtest-truenas-ssd-iscsi.yaml
-# Pod logs for read test:
-# kubectl logs -l app=speedtest,job=read
-# Pod logs for write test:
-# kubectl logs -l app=speedtest,job=write
-# Delete the artifacts created from the speedtest:
-# kubectl delete -f ./tests/storage/speedtest-truenas-ssd-iscsi.yaml
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
