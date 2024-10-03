@@ -46,7 +46,7 @@ spec:
               REDIS_DBINDEX: "3"
               # Pre-loading of ML model must not be enabled during initial de-
               # ployment. Will cause crash loop otherwise.
-              # MACHINE_LEARNING_PRELOAD__CLIP: "XLM-Roberta-Large-Vit-B-16Plus"
+              MACHINE_LEARNING_PRELOAD__CLIP: "XLM-Roberta-Large-Vit-B-16Plus"
               MPLCONFIGDIR: /tmp/matplotlib
               UPLOAD_LOCATION: /usr/src/app/upload
             envFrom: &envFrom
