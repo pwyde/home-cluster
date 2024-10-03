@@ -7,3 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./dokuwiki/ks.yaml
+  - ./immich/ks.yaml

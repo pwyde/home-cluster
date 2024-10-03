@@ -5,8 +5,8 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./pvc.yaml
   - ../../../../templates/gatus/internal
+  - ../../../../templates/pvc
 configMapGenerator:
   - name: immich-config
     files:
