@@ -7,7 +7,7 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: "${SECRET_ACME_EMAIL}"
+    email: "${SECRET_EMAIL}"
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
@@ -28,7 +28,7 @@ metadata:
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: "${SECRET_ACME_EMAIL}"
+    email: "${SECRET_EMAIL}"
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
@@ -40,29 +40,3 @@ spec:
         selector:
           dnsZones:
             - "${SECRET_DOMAIN}"
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/clusterissuer_v1.json
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: selfsigned-issuer
-spec:
-  selfSigned: {}
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/clusterissuer_v1.json
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: home-ca-issuer
-spec:
-  ca:
-    secretName: home-selfsigned-ca
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cert-manager.io/clusterissuer_v1.json
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: strong-ca-issuer
-spec:
-  ca:
-    secretName: strong-selfsigned-ca

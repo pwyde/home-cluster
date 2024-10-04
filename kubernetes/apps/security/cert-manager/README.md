@@ -25,9 +25,9 @@ spec:
 
 | Kind                                  | Name                                              |
 | ------------------------------------- | ------------------------------------------------- |
-| [`Namespace`][ref-namespace]          | `cert-manager`                                    |
+| [`Namespace`][ref-namespace]          | `security`                                        |
 | [`HelmRelease`][ref-helm-release]     | `cert-manager`                                    |
-| [`Secret`][ref-secret]                | `cloudflare-api-token`                            |
+| [`Secret`][ref-secret]                | `cert-manager-cloudflare`                         |
 | [`ClusterIssuer`][ref-cluster-issuer] | `lets-encrypt-production`, `lets-encrypt-staging` |
 
 [ref-namespace]: https://kubernetes.io/docs/reference/kubernetes-api/cluster-resources/namespace-v1/
