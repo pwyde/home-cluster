@@ -69,7 +69,7 @@ spec:
       service:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${SVC_IP_LOKI}
+          lbipam.cilium.io/ips: ${SVC_IP_LOKI}
       ingress:
         enabled: true
         annotations:
