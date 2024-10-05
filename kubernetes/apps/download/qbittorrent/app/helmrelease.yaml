@@ -203,7 +203,7 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${SVC_IP_QBITTORRENT}
+          lbipam.cilium.io/ips: ${SVC_IP_QBITTORRENT}
         ports:
           http:
             port: *port
