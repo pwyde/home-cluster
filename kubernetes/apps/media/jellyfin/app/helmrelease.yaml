@@ -103,7 +103,7 @@ spec:
       app:
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${SVC_IP_JELLYFIN}
+          lbipam.cilium.io/ips: ${SVC_IP_JELLYFIN}
         controller: *app
         ports:
           http:
