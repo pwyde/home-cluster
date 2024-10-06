@@ -205,15 +205,15 @@ spec:
             readOnly: true
       photos:
         type: nfs
-        server: ${TRUENAS_IP}
-        path: ${NFS_PATH_PHOTOS}
+        server: ${SECRET_NAS_IP}
+        path: ${SECRET_NFS_PATH_PHOTOS}
         globalMounts:
           - path: /photos
             readOnly: true
       upload:
         type: nfs
-        server: ${TRUENAS_IP}
-        path: ${NFS_PATH_IMMICH}
+        server: ${SECRET_NAS_IP}
+        path: ${SECRET_NFS_PATH_IMMICH}
         globalMounts:
           - path: /usr/src/app/upload
       tmp:

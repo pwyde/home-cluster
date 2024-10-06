@@ -92,7 +92,7 @@ spec:
         type: emptyDir
       media:
         type: nfs
-        server: ${TRUENAS_IP}
-        path: ${NFS_PATH_MEDIA}
+        server: ${SECRET_NAS_IP}
+        path: ${SECRET_NFS_PATH_MEDIA}
         globalMounts:
           - path: /data

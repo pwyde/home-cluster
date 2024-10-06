@@ -88,7 +88,7 @@ spec:
     persistence:
       backups:
         type: nfs
-        server: ${TRUENAS_IP}
-        path: ${NFS_PATH_PGBACKUPS}
+        server: ${SECRET_NAS_IP}
+        path: ${SECRET_NFS_PATH_PGBACKUPS}
         globalMounts:
           - path: /backups

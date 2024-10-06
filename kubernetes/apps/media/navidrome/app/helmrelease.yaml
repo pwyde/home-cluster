@@ -119,8 +119,8 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
       music:
         type: nfs
-        server: ${TRUENAS_IP}
-        path: ${NFS_PATH_MUSIC}
+        server: ${SECRET_NAS_IP}
+        path: ${SECRET_NFS_PATH_MUSIC}
         globalMounts:
           - path: /music
             readOnly: true
