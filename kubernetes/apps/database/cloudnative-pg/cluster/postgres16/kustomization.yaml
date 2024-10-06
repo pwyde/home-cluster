@@ -5,6 +5,5 @@ kind: Kustomization
 resources:
   - ./gatus.yaml
   - ./postgres16.yaml
-  - ./prometheusrule.yaml
   - ./scheduledbackup.yaml
   - ./service.yaml
