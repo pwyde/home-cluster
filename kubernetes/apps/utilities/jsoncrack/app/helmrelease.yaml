@@ -36,7 +36,7 @@ spec:
               repository: docker.io/enmanuelmoreira/jsoncrack
               tag: v3.2.0@sha256:cfd257a13dec324fc0e29b76d778a5a02b8f3863e5c4fca6aa6f39da272d06d3
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${CONFIG_TIMEZONE}
             probes:
               liveness:
                 enabled: true

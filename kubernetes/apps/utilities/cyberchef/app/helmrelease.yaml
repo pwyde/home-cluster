@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/gchq/cyberchef
               tag: 10.19.2@sha256:04a2be6fb9db9a65b6dc148f3c52be499f40ecb281b69135783bbd76186b1513
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${CONFIG_TIMEZONE}
             probes:
               liveness: &probes
                 enabled: true

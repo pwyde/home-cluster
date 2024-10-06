@@ -32,6 +32,7 @@ spec:
           reloader.stakater.com/auto: "true"
         type: cronjob
         cronjob:
+          timeZone: &tz ${CONFIG_TIMEZONE}
           schedule: "@daily"
           successfulJobsHistory: 1
           failedJobsHistory: 1
@@ -41,7 +42,7 @@ spec:
               repository: ghcr.io/recyclarr/recyclarr
               tag: 7.2.4@sha256:1bf2436ed4749a4309765dd21643aac858dd436a536e37c25bb463513601e962
             env:
-              TZ: ${TIMEZONE}
+              TZ: *tz
             envFrom:
               - secretRef:
                   name: *app

@@ -36,7 +36,7 @@ spec:
               repository: docker.io/dokuwiki/dokuwiki
               tag: stable
             env:
-              PHP_TIMEZONE: ${TIMEZONE}
+              PHP_TIMEZONE: ${CONFIG_TIMEZONE}
             probes:
               liveness: &probes
                 enabled: true

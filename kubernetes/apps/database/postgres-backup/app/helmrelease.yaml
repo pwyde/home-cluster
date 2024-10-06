@@ -32,7 +32,7 @@ spec:
           reloader.stakater.com/auto: "true"
         type: cronjob
         cronjob: &cronjob
-          timeZone: ${TIMEZONE}
+          timeZone: &tz ${CONFIG_TIMEZONE}
           schedule: 00 23 * * *
           successfulJobsHistory: 1
           failedJobsHistory: 1
@@ -45,7 +45,7 @@ spec:
               - secretRef:
                   name: *app
             env:
-              TZ: ${TIMEZONE}
+              TZ: *tz
               POSTGRES_HOST: postgres16-ro.database.svc.cluster.local
               POSTGRES_DB: authelia,bazarr,gatus,grafana,jfstat,lidarr_log,lidarr_main,,prowlarr_log,prowlarr_main,radarr_log,radarr_main,sonarr_log,sonarr_main
               BACKUP_KEEP_DAYS: 14
@@ -65,7 +65,7 @@ spec:
             image: *image
             envFrom: *envFrom
             env:
-              TZ: ${TIMEZONE}
+              TZ: *tz
               POSTGRES_HOST: pgvectors-ro.database.svc.cluster.local
               POSTGRES_DB: immich
               BACKUP_KEEP_DAYS: 7

@@ -28,8 +28,6 @@ spec:
   values:
     controllers:
       qbittorrent-exporter:
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           qbittorrent-exporter:
             image:

@@ -28,13 +28,15 @@ spec:
   values:
     controllers:
       jellyseerr:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           jellyseerr:
             image:
               repository: docker.io/fallenbagel/jellyseerr
               tag: 1.9.2@sha256:8f708df0ce3f202056bde5d7bff625eb59efe38f4ee47bdddc7560b6e4a5a214
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${CONFIG_TIMEZONE}
               CONFIG_DIRECTORY: /config
               LOG_LEVEL: info
             probes:

@@ -28,13 +28,15 @@ spec:
   values:
     controllers:
       flaresolverr:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           flaresolverr:
             image:
               repository: ghcr.io/flaresolverr/flaresolverr
               tag: v3.3.21@sha256:f104ee51e5124d83cf3be9b37480649355d223f7d8f9e453d0d5ef06c6e3b31b
             env:
-              TZ: $TZ
+              TZ: ${CONFIG_TIMEZONE}
               LANG: en_GB
               LOG_LEVEL: info
               LOG_HTML: false

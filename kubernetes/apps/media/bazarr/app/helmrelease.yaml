@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/onedr0p/bazarr
               tag: 1.4.5@sha256:7292dc9854a4baf58278d51816a5cef69a455189ad12b827a05475c93cefc916
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${CONFIG_TIMEZONE}
             envFrom: *envFrom
             probes:
               liveness: &probes
