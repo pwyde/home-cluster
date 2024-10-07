@@ -15,6 +15,13 @@ data:
   CLUSTER_NAME: "home-cluster"
   CLUSTER_POD_CIDR: "10.69.0.0/16"
   CLUSTER_SVC_CIDR: "10.96.0.0/16"
+  # K8s Cluster Storage
+  CLUSTER_STORAGE_BLOCK: "truenas-ssd-iscsi"
+  CLUSTER_SNAPSHOT_BLOCK: "truenas-ssd-iscsi"
+  CLUSTER_STORAGE_NFS: "truenas-ssd-nfs"
+  CLUSTER_SNAPSHOT_NFS: "truenas-ssd-nfs"
+  CLUSTER_STORAGE_HOSTPATH: "openebs-hostpath"
+  CLUSTER_SNAPSHOT_HOSTPATH: "openebs-hostpath"
   # Networks
   NET_LOCAL_CIDR: "192.168.20.0/24"
   NET_L2POOL_CIDR: "192.168.20.32/27"
