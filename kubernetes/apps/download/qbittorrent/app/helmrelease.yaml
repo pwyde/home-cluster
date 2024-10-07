@@ -104,7 +104,7 @@ spec:
               QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               # Settings > WebUI > Bypass authentication for clients in whitelisted IP subnets.
               QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
-                ${CLUSTER_CIDR}, ${NODE_CIDR}
+                ${CLUSTER_POD_CIDR}, ${NODE_CIDR}
               # Settings > WebUI > Use Alternative WebUI.
               QBT_Preferences__WebUI__AlternativeUIEnabled: true
               # Settings > WebUI > Use Alternative WebUI.
@@ -166,7 +166,7 @@ spec:
               VPN_INTERFACE: wg0
               FIREWALL_INPUT_PORTS: *port
               FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
-              FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_CIDR},${SERVICE_CIDR} # Allow access to K8s subnets.
+              FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR} # Allow access to K8s subnets.
             envFrom:
               - secretRef:
                   name: *app

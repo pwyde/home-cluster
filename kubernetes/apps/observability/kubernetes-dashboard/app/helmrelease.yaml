@@ -28,8 +28,9 @@ spec:
   values:
     app:
       settings:
-        global: home-cluster
-        itemsPerPage: 50
+        global:
+          clusterName: ${CLUSTER_NAME}
+          itemsPerPage: 50
       ingress:
         enabled: true
         annotations:

@@ -7,9 +7,11 @@ metadata:
 data:
   # Configuration
   CONFIG_TIMEZONE: "Europe/Stockholm"
+  # K8s Cluster
+  CLUSTER_NAME: "home-cluster"
+  CLUSTER_POD_CIDR: "10.69.0.0/16"
+  CLUSTER_SVC_CIDR: "10.96.0.0/16"
   # Old variable structure
-  CLUSTER_CIDR: "10.69.0.0/16"
-  SERVICE_CIDR: "10.96.0.0/16"
   NODE_CIDR: "192.168.20.0/24"
   K8S_1_IP: "192.168.20.21"
   K8S_2_IP: "192.168.20.22"
