@@ -20,24 +20,8 @@ spec:
 apiVersion: cilium.io/v2alpha1
 kind: CiliumLoadBalancerIPPool
 metadata:
-  name: l2-pool-internal
+  name: l2-pool
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: ${NET_L2POOL_INTERNAL_CIDR}
-  # serviceSelector:
-  #   matchExpressions:
-  #     - {key: io.cilium/ippool, operator: In, values: [internal]}
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumloadbalancerippool_v2alpha1.json
-apiVersion: cilium.io/v2alpha1
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: l2-pool-external
-spec:
-  allowFirstLastIPs: "Yes"
-  blocks:
-    - cidr: ${NET_L2POOL_EXTERNAL_CIDR}
-  # serviceSelector:
-  #   matchExpressions:
-  #     - {key: io.cilium/ippool, operator: NotIn, values: [internal]}
+    - cidr: ${NET_L2POOL_CIDR}
