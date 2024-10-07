@@ -7,6 +7,10 @@ metadata:
 data:
   # Configuration
   CONFIG_TIMEZONE: "Europe/Stockholm"
+  CONFIG_APP_UID: "5000"
+  CONFIG_APP_GID: "5000"
+  CONFIG_APP_USER: "k8s"
+  CONFIG_APP_GROUP: "appdata"
   # K8s Cluster
   CLUSTER_NAME: "home-cluster"
   CLUSTER_POD_CIDR: "10.69.0.0/16"
