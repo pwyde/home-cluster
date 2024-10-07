@@ -38,7 +38,7 @@ spec:
             env:
               TZ: &tz ${CONFIG_TIMEZONE}
               QBITTORRENT__PORT: &port 80
-              QBITTORRENT__BT_PORT: &bittorrentPort 60112
+              QBITTORRENT__BT_PORT: &bittorrentPort ${SVC_QBITTORRENT_PORT}
               # Settings based on https://trash-guides.info/Downloaders/qBittorrent/.
               # Settings > Advanced > Physical memory (RAM) usage limit (libtorrent >=2.0).
               QBT_Application__MemoryWorkingSetLimit: 10000
