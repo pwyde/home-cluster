@@ -141,12 +141,11 @@ spec:
           # https://prometheus.io/docs/prometheus/latest/feature_flags/
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
-        ruleSelector: &selector
-          matchLabels: null
-        serviceMonitorSelector: *selector
-        podMonitorSelector: *selector
-        probeSelector: *selector
-        scrapeConfigSelector: *selector
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
         retention: 14d
         retentionSize: 90GB
         walCompression: true
