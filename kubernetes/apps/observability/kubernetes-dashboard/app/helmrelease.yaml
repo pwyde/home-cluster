@@ -35,7 +35,7 @@ spec:
         enabled: true
         annotations:
           external-dns.alpha.kubernetes.io/target: &host k8s-dashboard.${SECRET_DOMAIN}
-          nginx.ingress.kubernetes.io/whitelist-source-range: ${NET_LOCAL_CIDR}
+          nginx.ingress.kubernetes.io/whitelist-source-range: ${NET_WHITELIST_IP_RANGES}
         ingressClassName: internal
         hosts:
           - *host
