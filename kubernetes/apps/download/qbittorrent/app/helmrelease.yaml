@@ -104,7 +104,7 @@ spec:
               QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               # Settings > WebUI > Bypass authentication for clients in whitelisted IP subnets.
               QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
-                ${CLUSTER_POD_CIDR}, ${NODE_CIDR}
+                ${CLUSTER_POD_CIDR}, ${NET_LOCAL_CIDR}
               # Settings > WebUI > Use Alternative WebUI.
               QBT_Preferences__WebUI__AlternativeUIEnabled: true
               # Settings > WebUI > Use Alternative WebUI.
