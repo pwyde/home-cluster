@@ -76,7 +76,7 @@ spec:
               requests:
                 cpu: 100m
                 memory: 2Gi
-                nvidia.com/gpu: 1 # Request 1 GPU.
+                # nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 memory: 4Gi
                 nvidia.com/gpu: 1
