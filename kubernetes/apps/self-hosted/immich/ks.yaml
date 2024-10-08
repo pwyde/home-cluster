@@ -28,5 +28,5 @@ spec:
     substitute:
       APP: *app
       PVC_ACCESSMODES: ReadWriteOnce
-      PVC_STORAGECLASS: truenas-ssd-iscsi
+      PVC_STORAGECLASS: ${CLUSTER_STORAGE_BLOCK}
       PVC_CAPACITY: 10Gi
