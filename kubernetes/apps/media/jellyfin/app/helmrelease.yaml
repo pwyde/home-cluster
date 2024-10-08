@@ -81,8 +81,6 @@ spec:
                 memory: 4Gi
                 nvidia.com/gpu: 1
     defaultPodOptions:
-      nodeSelector:
-        nvidia.com/gpu.present: "true"
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
