@@ -16,14 +16,12 @@ spec:
         namespace: flux-system
   install:
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
       strategy: rollback
-      retries: 5
-  uninstall:
-    keepHistory: false
+      retries: 3
   dependsOn:
     - name: snapshot-controller
       namespace: storage
