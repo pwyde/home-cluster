@@ -11,8 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: democratic-csi-nfs
-    - name: generic-device-plugin
     - name: external-secrets-stores
     - name: volsync
   path: ./kubernetes/apps/download/qbittorrent/app

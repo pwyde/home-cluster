@@ -25,6 +25,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: democratic-csi-nfs
+      namespace: storage
+    - name: generic-device-plugin
+      namespace: kube-system
   values:
     controllers:
       qbittorrent:
