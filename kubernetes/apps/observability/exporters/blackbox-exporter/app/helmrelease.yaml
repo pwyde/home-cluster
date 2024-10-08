@@ -29,11 +29,9 @@ spec:
     fullnameOverride: *app
     ingress:
       enabled: true
-      annotations:
-        external-dns.alpha.kubernetes.io/target: &host blackbox.${SECRET_DOMAIN}
       className: internal
       hosts:
-        - host: *host
+        - host: &host blackbox.${SECRET_DOMAIN}
           paths:
             - path: /
               pathType: Prefix

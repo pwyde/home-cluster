@@ -215,19 +215,20 @@ spec:
           #   targetPort: *bittorrentPort
     ingress:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: &host qbit.${SECRET_DOMAIN}
         className: internal
         hosts:
-          - host: *host
-            paths:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths: &paths
               - path: /
                 service:
                   identifier: app
                   port: http
+          - host: &customHost qbit.${SECRET_DOMAIN}
+            paths: *paths
         tls:
           - hosts:
               - *host
+              - *customHost
     persistence:
       addons:
         type: emptyDir

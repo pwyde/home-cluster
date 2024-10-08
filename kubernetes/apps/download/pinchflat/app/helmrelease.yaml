@@ -78,11 +78,9 @@ spec:
             port: *port
     ingress:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: &host pinchflat.${SECRET_DOMAIN}
         className: internal
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:

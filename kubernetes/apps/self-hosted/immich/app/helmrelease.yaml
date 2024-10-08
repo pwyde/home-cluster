@@ -174,12 +174,11 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: &host immich.${SECRET_DOMAIN}
           # Set to 0 to remove the body limit on file uploads.
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
         className: internal
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths: &paths
               - path: /
                 service:

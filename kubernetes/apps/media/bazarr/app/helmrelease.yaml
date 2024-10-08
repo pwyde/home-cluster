@@ -103,12 +103,11 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: &host bazarr.${SECRET_DOMAIN}
           # Fix Bazarr with error-pages.
           nginx.ingress.kubernetes.io/custom-http-errors: "599"
         className: internal
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:

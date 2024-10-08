@@ -44,12 +44,10 @@ spec:
     alertmanager:
       ingress:
         enabled: true
-        annotations:
-          external-dns.alpha.kubernetes.io/target: &host alertmanager.${SECRET_DOMAIN}
         ingressClassName: internal
-        pathType: Prefix
         hosts:
-          - *host
+          - &host alertmanager.${SECRET_DOMAIN}
+        pathType: Prefix
         tls:
           - hosts:
               - *host
@@ -124,12 +122,10 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        annotations:
-          external-dns.alpha.kubernetes.io/target: &host prometheus.${SECRET_DOMAIN}
         ingressClassName: internal
-        pathType: Prefix
         hosts:
-          - *host
+          - &host prometheus.${SECRET_DOMAIN}
+        pathType: Prefix
         tls:
           - hosts:
               - *host

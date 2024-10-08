@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: echo-server
+  name: &app echo-server
 spec:
   interval: 30m
   chart:
@@ -26,7 +26,7 @@ spec:
       echo-server:
         strategy: RollingUpdate
         containers:
-          app:
+          echo-server:
             image:
               repository: ghcr.io/mendhak/http-https-echo
               tag: 34
@@ -65,13 +65,13 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
-        controller: echo-server
+        controller: *app
         ports:
           http:
             port: *port
     serviceMonitor:
       app:
-        serviceName: echo-server
+        serviceName: *app
         endpoints:
           - port: http
             scheme: http
@@ -84,9 +84,12 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
         hosts:
-          - host: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
+        tls:
+          - hosts:
+              - *host

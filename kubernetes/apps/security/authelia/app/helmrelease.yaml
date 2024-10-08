@@ -115,7 +115,6 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: &host auth.${SECRET_DOMAIN}
           nginx.ingress.kubernetes.io/configuration-snippet: |
             add_header Cache-Control "no-store";
             add_header Pragma "no-cache";
@@ -123,15 +122,18 @@ spec:
             add_header X-XSS-Protection "1; mode=block";
         className: internal
         hosts:
-          - host: *host
-            paths:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths: &paths
               - path: /
                 service:
                   identifier: app
                   port: http
+          - host: &customHost auth.${SECRET_DOMAIN}
+            paths: *paths
         tls:
           - hosts:
               - *host
+              - *customHost
     persistence:
       config:
         type: configMap

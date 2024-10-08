@@ -113,12 +113,11 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: &host minio.${SECRET_DOMAIN}
           # Fix MinIO Console with error-pages.
           nginx.ingress.kubernetes.io/custom-http-errors: "599"
         className: internal
         hosts:
-          - host: *host
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
