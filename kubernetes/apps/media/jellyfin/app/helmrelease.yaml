@@ -81,19 +81,27 @@ spec:
                 memory: 4Gi
                 nvidia.com/gpu: 1
     defaultPodOptions:
-      priorityClassName: gpu-priority
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/hostname
-                operator: In
-                values:
-                - k8s-5
       nodeSelector:
         nvidia.com/gpu.present: "true"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                - key: nvidia.com/gpu.present
+                  operator: In
+                  values:
+                    - "true"
+      tolerations:
+        - key: "nvidia.com/gpu"
+          operator: "Exists"
+          effect: "NoExecute"
+        - key: "nvidia.com/gpu"
+          operator: "Exists"
+          effect: "NoSchedule"
       runtimeClassName: nvidia
+      priorityClassName: gpu-priority
       securityContext:
         runAsNonRoot: true
         runAsUser: &uid 5000
