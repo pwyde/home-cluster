@@ -26,7 +26,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      APP_UID: &uid "${CONFIG_APP_UID}"
+      APP_UID: &uid ${quote}${CONFIG_APP_UID}${quote}
       APP_GID: *uid
       VOLSYNC_CLAIM: *app
       VOLSYNC_ACCESSMODES: &accessModes ReadWriteOnce
