@@ -397,7 +397,7 @@ spec:
       enabled: true
       ingressClassName: internal
       hosts:
-        - &host "{{ .Release.Name }}.${PUBLIC_SECRET_DOMAINDOMAIN}"
+        - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - *host
