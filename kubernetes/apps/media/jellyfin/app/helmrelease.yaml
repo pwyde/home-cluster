@@ -79,7 +79,7 @@ spec:
                 # nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 memory: 4Gi
-                nvidia.com/gpu: 1
+                # nvidia.com/gpu: 1
     defaultPodOptions:
       affinity:
         nodeAffinity:
