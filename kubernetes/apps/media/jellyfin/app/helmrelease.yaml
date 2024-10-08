@@ -76,28 +76,22 @@ spec:
               requests:
                 cpu: 100m
                 memory: 2Gi
-                # nvidia.com/gpu: 1 # Request 1 GPU.
+                nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 memory: 4Gi
-                # nvidia.com/gpu: 1
+                nvidia.com/gpu: 1
     defaultPodOptions:
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              preference:
-                matchExpressions:
-                - key: nvidia.com/gpu.present
-                  operator: In
-                  values:
-                    - "true"
-      tolerations:
-        - key: "nvidia.com/gpu"
-          operator: "Exists"
-          effect: "NoExecute"
-        - key: "nvidia.com/gpu"
-          operator: "Exists"
-          effect: "NoSchedule"
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nvidia.com/gpu.present
+                operator: In
+                values:
+                  - "true"
       runtimeClassName: nvidia
       priorityClassName: gpu-priority
       securityContext:
