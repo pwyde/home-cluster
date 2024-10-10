@@ -10,6 +10,6 @@ resources:
 configMapGenerator:
   - name: pgadmin-config
     files:
-      - servers.json=./resources/servers.json
+      - servers.json=./resources/config.json
 generatorOptions:
   disableNameSuffixHash: true
