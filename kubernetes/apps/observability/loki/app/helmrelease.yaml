@@ -96,3 +96,6 @@ spec:
       enabled: false
     test:
       enabled: false
+    sidecar:
+      rules:
+        searchNamespace: ALL
