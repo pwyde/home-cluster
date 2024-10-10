@@ -25,6 +25,7 @@ spec:
   values:
     controllers:
       generic-device-plugin:
+        type: daemonset
         annotations:
           configmap.reloader.stakater.com/reload: &configMap generic-device-plugin-config
         containers:
