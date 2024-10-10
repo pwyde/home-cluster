@@ -7,6 +7,6 @@ resources:
 configMapGenerator:
   - name: generic-device-plugin-config
     files:
-      - ./resources/config.yaml
+      - config.yaml=./resources/config.yaml
 generatorOptions:
   disableNameSuffixHash: true

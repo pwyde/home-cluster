@@ -26,7 +26,7 @@ spec:
     controllers:
       generic-device-plugin:
         annotations:
-          reloader.stakater.com/auto: "true"
+          configmap.reloader.stakater.com/reload: &configMap generic-device-plugin-config
         containers:
           generic-device-plugin:
             image:
@@ -54,7 +54,7 @@ spec:
     persistence:
       config:
         type: configMap
-        name: generic-device-plugin-config
+        name: *configMap
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
