@@ -29,7 +29,7 @@ spec:
       namespace: kube-system
   values:
     podAnnotations:
-      configmap.reloader.stakater.com/reload: nvidia-device-plugin-config
+      configmap.reloader.stakater.com/reload: &configMap nvidia-device-plugin-config
     nodeSelector:
         nvidia.com/gpu.present: "true"
     affinity:
@@ -43,7 +43,7 @@ spec:
                 - "true"
     runtimeClassName: nvidia
     config:
-      name: nvidia-device-plugin-config
+      name: *configMap
     gfd:
       enabled: true
     nfd:
