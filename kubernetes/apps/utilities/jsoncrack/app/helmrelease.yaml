@@ -43,8 +43,8 @@ spec:
               startup:
                 enabled: false
             securityContext:
-              readOnlyRootFilesystem: true
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
               capabilities:
                 drop: ["ALL"]
             resources:
