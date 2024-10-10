@@ -70,7 +70,7 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
       config-file:
         type: configMap
-        name: recyclarr-config-file
+        name: recyclarr-config
         globalMounts:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
