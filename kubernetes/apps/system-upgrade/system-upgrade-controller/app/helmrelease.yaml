@@ -81,19 +81,19 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      etc-ssl:
+      ssl:
         type: hostPath
         hostPath: /etc/ssl
         hostPathType: DirectoryOrCreate
         globalMounts:
           - readOnly: true
-      etc-pki:
+      pki:
         type: hostPath
         hostPath: /etc/pki
         hostPathType: DirectoryOrCreate
         globalMounts:
           - readOnly: true
-      etc-ca-certificates:
+      ca-certificates:
         type: hostPath
         hostPath: /etc/ca-certificates
         hostPathType: DirectoryOrCreate
