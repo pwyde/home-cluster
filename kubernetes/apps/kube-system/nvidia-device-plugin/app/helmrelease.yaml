@@ -30,9 +30,20 @@ spec:
   values:
     podAnnotations:
       configmap.reloader.stakater.com/reload: nvidia-device-plugin-config
+    nodeSelector:
+        nvidia.com/gpu.present: "true"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: nvidia.com/gpu.present
+              operator: In
+              values:
+                - "true"
+    runtimeClassName: nvidia
     config:
       name: nvidia-device-plugin-config
-    runtimeClassName: nvidia
     gfd:
       enabled: true
     nfd:
