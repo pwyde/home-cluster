@@ -29,9 +29,9 @@ spec:
       namespace: kube-system
   values:
     podAnnotations:
-      configmap.reloader.stakater.com/reload: nvidia-helm-values
+      configmap.reloader.stakater.com/reload: nvidia-device-plugin-config
     config:
-      name: nvidia-helm-values
+      name: nvidia-device-plugin-config
     runtimeClassName: nvidia
     gfd:
       enabled: true
