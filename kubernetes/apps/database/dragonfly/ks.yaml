@@ -33,6 +33,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: dragonfly
+    - name: external-secrets-stores
   path: ./kubernetes/apps/database/dragonfly/cluster
   prune: true
   sourceRef:
