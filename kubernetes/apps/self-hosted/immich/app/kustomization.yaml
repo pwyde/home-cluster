@@ -10,6 +10,6 @@ resources:
 configMapGenerator:
   - name: immich-config
     files:
-      - immich.json=./resources/immich-config.json
+      - immich.json=./resources/config.json
 generatorOptions:
   disableNameSuffixHash: true
