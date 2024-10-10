@@ -70,7 +70,7 @@ spec:
         # Service name should not be 'redisinsight' since the service creates
         # environment variables that conflicts with redisinsight application's
         # environment variables: REDISINSIGHT_HOST and REDISINSIGHT_PORT
-        nameOverride: redisinsight-svc
+        nameOverride: svc
         controller: *app
         ports:
           http:
