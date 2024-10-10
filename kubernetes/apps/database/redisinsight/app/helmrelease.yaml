@@ -89,5 +89,5 @@ spec:
           - hosts:
               - *host
     persistence:
-      config:
+      data:
         existingClaim: ${VOLSYNC_CLAIM}
