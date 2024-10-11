@@ -18,4 +18,4 @@ spec:
             severity: warning
           annotations:
             summary: "Sonarr may have items stuck in the queue (instance {{ $labels.instance }})"
-            description: "Sonarr queue hasn't changed for more than 1 hour\n  VALUE = {{ $value }}\n  LABELS: {{ $labels }}"
+            description: "Sonarr queue hasn't changed for more than 1 hour\n  VALUE = {{ $value }}"
