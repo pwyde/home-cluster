@@ -59,7 +59,7 @@ spec:
                 enabled: false
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
@@ -94,13 +94,3 @@ spec:
             path: /metrics
             interval: 1m
             scrapeTimeout: 10s
-    persistence:
-      app:
-        type: emptyDir
-        globalMounts:
-          - path: /app/.local
-          - path: /app/chromedriver
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
