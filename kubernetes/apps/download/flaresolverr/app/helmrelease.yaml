@@ -98,5 +98,5 @@ spec:
       tmp:
         type: emptyDir
         globalMounts:
+          - path: /app/.local
           - path: /tmp
-          - path: /.local
