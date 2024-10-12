@@ -95,8 +95,12 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     persistence:
-      tmp:
+      app:
         type: emptyDir
         globalMounts:
           - path: /app/.local
+          - path: /app/chromedriver
+      tmp:
+        type: emptyDir
+        globalMounts:
           - path: /tmp
