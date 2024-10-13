@@ -91,7 +91,6 @@ spec:
         runAsNonRoot: true
         runAsUser: &uid 65534
         runAsGroup: *uid
-        fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
       app:

@@ -65,7 +65,6 @@ spec:
         runAsUser: &uid 65534
         runAsGroup: *uid
         fsGroup: *uid
-        fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
       app:
