@@ -25,22 +25,6 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
-    ingress:
-      enabled: true
-      className: internal
-      hosts:
-        - host: &host blackbox.${SECRET_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-          - hosts:
-              - *host
-    securityContext:
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        add: ["NET_RAW"]
     config:
       modules:
         http_2xx:
@@ -60,6 +44,22 @@ spec:
           timeout: 5s
           tcp:
             preferred_ip_protocol: ipv4
+    ingress:
+      enabled: true
+      className: internal
+      hosts:
+        - host: &host blackbox.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+          - hosts:
+              - *host
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        add: ["NET_RAW"]
     serviceMonitor:
       enabled: true
       defaults:
