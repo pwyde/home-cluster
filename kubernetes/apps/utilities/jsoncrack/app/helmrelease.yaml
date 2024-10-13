@@ -40,13 +40,10 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop: ["ALL"]
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
