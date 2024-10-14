@@ -120,16 +120,11 @@ spec:
                   httpGet:
                     path: /api/v2/app/version
                     port: *port
-                  initialDelaySeconds: 30
-                  periodSeconds: 30
-                  timeoutSeconds: 10
-                  failureThreshold: 5
-              readiness: *probes
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
+                  initialDelaySeconds: 0
                   periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               runAsNonRoot: true
               runAsUser: &uid 5000
@@ -142,22 +137,6 @@ spec:
                 cpu: 100m
               limits:
                 memory: 8Gi
-          vuetorrent:
-            dependsOn: qbittorrent
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.3.0
-            args:
-              - --repo=https://github.com/WDaan/VueTorrent
-              - --ref=latest-release
-              - --period=86400s
-              - --root=/addons
-            resources:
-              requests:
-                cpu: 10m
-                memory: 25Mi
-              limits:
-                memory: 50Mi
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
@@ -196,6 +175,22 @@ spec:
                 spec:
                   exec: *exec
                   periodSeconds: 5
+          vuetorrent:
+            dependsOn: qbittorrent
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.3.0
+            args:
+              - --repo=https://github.com/WDaan/VueTorrent
+              - --ref=latest-release
+              - --period=86400s
+              - --root=/addons
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
     defaultPodOptions:
       securityContext:
         fsGroup: &gid 4000
