@@ -120,9 +120,9 @@ spec:
                   httpGet:
                     path: /api/v2/app/version
                     port: *port
-                  initialDelaySeconds: 30
+                  initialDelaySeconds: 10
                   periodSeconds: 10
-                  timeoutSeconds: 1
+                  timeoutSeconds: 10
                   failureThreshold: 5
               readiness: *probes
             securityContext:
@@ -143,12 +143,17 @@ spec:
               tag: v3.39.1@sha256:cb9183810872906d600327d29c93b80ce9de1e3e21f188f65b4a70a15afc6e32
             env:
               TZ: *tz
+              # Ports to allow through the default interface. This is needed for Kubernetes sidecars.
+              FIREWALL_INPUT_PORTS: "80,9999"
+              # Ports to allow from the VPN server side.
+              FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
+              # Allow access to K8s subnets.
+              FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR}
+              # Internal health check server listening address.
+              HEALTH_SERVER_ADDRESS: "127.0.0.1:9999"
               VPN_SERVICE_PROVIDER: custom
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
-              FIREWALL_INPUT_PORTS: *port
-              FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
-              FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR} # Allow access to K8s subnets.
             envFrom:
               - secretRef:
                   name: *app
@@ -162,7 +167,7 @@ spec:
                     port: 9999
                   initialDelaySeconds: 10
                   periodSeconds: 10
-                  timeoutSeconds: 1
+                  timeoutSeconds: 10
                   failureThreshold: 5
               startup: *probes
             securityContext:
