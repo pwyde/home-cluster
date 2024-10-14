@@ -48,8 +48,3 @@ spec:
       enabled: true
     nfd:
       enabled: false
-    resources:
-      requests:
-        cpu: 100m
-      limits:
-        memory: 512Mi
