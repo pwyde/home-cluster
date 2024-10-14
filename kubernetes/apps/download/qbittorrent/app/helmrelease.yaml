@@ -120,10 +120,10 @@ spec:
                   httpGet:
                     path: /api/v2/app/version
                     port: *port
-                  initialDelaySeconds: 0
+                  initialDelaySeconds: 30
                   periodSeconds: 10
                   timeoutSeconds: 1
-                  failureThreshold: 3
+                  failureThreshold: 5
               readiness: *probes
             securityContext:
               runAsNonRoot: true
@@ -149,23 +149,22 @@ spec:
               FIREWALL_INPUT_PORTS: *port
               FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
               FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR} # Allow access to K8s subnets.
-              LOG_LEVEL: debug
             envFrom:
               - secretRef:
                   name: *app
             probes:
-              liveness: &probe
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
-                  exec: &exec
-                    command: [/gluetun-entrypoint, healthcheck]
-                  periodSeconds: 60
-              startup:
-                <<: *probe
-                spec:
-                  exec: *exec
-                  periodSeconds: 5
+                  httpGet:
+                    path: /
+                    port: 9999
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              startup: *probes
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { add: ["NET_ADMIN"] }
