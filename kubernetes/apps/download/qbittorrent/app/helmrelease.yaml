@@ -150,7 +150,7 @@ spec:
               # Allow access to K8s subnets.
               FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR}
               # Internal health check server listening address.
-              HEALTH_SERVER_ADDRESS: "127.0.0.1:9999"
+              HEALTH_SERVER_ADDRESS: ":9999"
               VPN_SERVICE_PROVIDER: custom
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
