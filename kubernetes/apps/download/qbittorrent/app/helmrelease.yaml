@@ -146,22 +146,13 @@ spec:
               VPN_SERVICE_PROVIDER: custom
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
-              FIREWALL_INPUT_PORTS: *port
+              HEALTH_SERVER_ADDRESS: 127.0.0.1:9999
+              FIREWALL_INPUT_PORTS: 80,9999
               FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
               FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR} # Allow access to K8s subnets.
             envFrom:
               - secretRef:
                   name: *app
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities: { add: ["NET_ADMIN"] }
-            resources:
-              limits:
-                # Request the /dev/net/tun device that is exposed on the node
-                # using generic-device-plugin. For more information, see:
-                # - https://www.talos.dev/v1.8/introduction/what-is-new/#accessing-devnettun-in-kubernetes-pods
-                # - https://www.talos.dev/v1.8/kubernetes-guides/configuration/device-plugins/
-                squat.ai/tun: "1"
             probes:
               liveness: &probe
                 enabled: true
@@ -175,6 +166,16 @@ spec:
                 spec:
                   exec: *exec
                   periodSeconds: 5
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { add: ["NET_ADMIN"] }
+            resources:
+              limits:
+                # Request the /dev/net/tun device that is exposed on the node
+                # using generic-device-plugin. For more information, see:
+                # - https://www.talos.dev/v1.8/introduction/what-is-new/#accessing-devnettun-in-kubernetes-pods
+                # - https://www.talos.dev/v1.8/kubernetes-guides/configuration/device-plugins/
+                squat.ai/tun: "1"
           vuetorrent:
             dependsOn: qbittorrent
             image:
