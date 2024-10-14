@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: node-feature-discovery
+    - name: nvidia-device-plugin
   path: ./kubernetes/apps/observability/exporters/dcgm-exporter/app
   prune: true
   sourceRef:
@@ -19,5 +19,4 @@ spec:
     name: home-kubernetes
   wait: true
   interval: 30m
-  retryInterval: 1m
   timeout: 15m
