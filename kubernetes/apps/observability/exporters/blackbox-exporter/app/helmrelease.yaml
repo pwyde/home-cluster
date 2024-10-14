@@ -56,9 +56,10 @@ spec:
           - hosts:
               - *host
     securityContext:
-      readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
       capabilities:
+        # Add NET_RAW to enable ICMP.
         add: ["NET_RAW"]
     serviceMonitor:
       enabled: true
