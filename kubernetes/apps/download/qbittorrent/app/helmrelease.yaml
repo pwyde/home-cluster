@@ -149,6 +149,7 @@ spec:
               FIREWALL_INPUT_PORTS: *port
               FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
               FIREWALL_OUTBOUND_SUBNETS: ${CLUSTER_POD_CIDR},${CLUSTER_SVC_CIDR} # Allow access to K8s subnets.
+              LOG_LEVEL: debug
             envFrom:
               - secretRef:
                   name: *app
