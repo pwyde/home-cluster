@@ -60,15 +60,16 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            resources:
+              requests:
+                cpu: 303m
+                memory: 550Mi
+              limits:
+                memory: 560Mi
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 1Gi
           subcleaner:
             image:
               repository: registry.k8s.io/git-sync/git-sync
@@ -81,8 +82,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
+                memory: 100Mi
               limits:
-                memory: 128Mi
+                memory: 110Mi
             securityContext: *securityContext
     defaultPodOptions:
       securityContext:

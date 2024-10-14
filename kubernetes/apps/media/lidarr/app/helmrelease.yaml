@@ -68,15 +68,16 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            resources:
+              requests:
+                cpu: 1.118m
+                memory: 515Mi
+              limits:
+                memory: 525Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 2Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
