@@ -125,6 +125,12 @@ spec:
                   timeoutSeconds: 10
                   failureThreshold: 5
               readiness: *probes
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1776Mi
+              limits:
+                memory: 2Gi
             securityContext:
               runAsNonRoot: true
               runAsUser: &uid 5000
@@ -132,11 +138,6 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 100m
-              limits:
-                memory: 8Gi
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
@@ -170,16 +171,21 @@ spec:
                   timeoutSeconds: 10
                   failureThreshold: 5
               startup: *probes
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities: { add: ["NET_ADMIN"] }
             resources:
-              limits:
+              requests:
+                cpu: 177m
+                memory: 612Mi
                 # Request the /dev/net/tun device that is exposed on the node
                 # using generic-device-plugin. For more information, see:
                 # - https://www.talos.dev/v1.8/introduction/what-is-new/#accessing-devnettun-in-kubernetes-pods
                 # - https://www.talos.dev/v1.8/kubernetes-guides/configuration/device-plugins/
                 squat.ai/tun: "1"
+              limits:
+                memory: 622Mi
+                squat.ai/tun: "1"
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { add: ["NET_ADMIN"] }
           vuetorrent:
             dependsOn: qbittorrent
             image:
@@ -192,10 +198,10 @@ spec:
               - --root=/addons
             resources:
               requests:
-                cpu: 10m
-                memory: 25Mi
+                cpu: 13m
+                memory: 100Mi
               limits:
-                memory: 50Mi
+                memory: 110Mi
     defaultPodOptions:
       securityContext:
         fsGroup: &gid 4000
