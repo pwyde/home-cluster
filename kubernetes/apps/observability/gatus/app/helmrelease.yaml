@@ -48,7 +48,6 @@ spec:
               RESOURCE: both
               UNIQUE_FILENAMES: true
               METHOD: LIST
-            restartPolicy: Always
             resources: &resources
               requests:
                 cpu: 10m
