@@ -116,6 +116,14 @@ spec:
               sourceLabels:
                 - kubernetes_node
               targetLabel: instance
+    prometheusOperator:
+      prometheusConfigReloader:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 100Mi
     prometheus:
       ingress:
         enabled: true
@@ -145,8 +153,9 @@ spec:
         resources:
           requests:
             cpu: 300m
+            memory: 1723Mi
           limits:
-            memory: 1500Mi
+            memory: 2Gi
         storageSpec:
           volumeClaimTemplate:
             metadata:
