@@ -191,6 +191,12 @@ spec:
             url: http://alertmanager-operated.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
+        resources:
+          requests:
+            cpu: 80m
+            memory: 100Mi
+          limits:
+            memory: 110Mi
     dashboards:
       database:
         dragonfly:
