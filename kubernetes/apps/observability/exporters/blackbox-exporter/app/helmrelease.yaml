@@ -55,6 +55,12 @@ spec:
       tls:
           - hosts:
               - *host
+    resources:
+      requests:
+        cpu: 10m
+        memory: 100M
+      limits:
+        memory: 100M
     securityContext:
       allowPrivilegeEscalation: false
       readOnlyRootFilesystem: true

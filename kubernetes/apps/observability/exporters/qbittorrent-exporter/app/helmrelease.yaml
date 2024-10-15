@@ -40,15 +40,16 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 100Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 128Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

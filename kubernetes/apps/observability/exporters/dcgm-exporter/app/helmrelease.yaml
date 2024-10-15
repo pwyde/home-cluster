@@ -34,7 +34,12 @@ spec:
       NVIDIA_DRIVER_CAPABILITIES: all
       NVIDIA_VISIBLE_DEVICES: all
     resources:
+      requests:
+        cpu: 10m
+        memory: 287Mi
+        nvidia.com/gpu: 1
       limits:
+        memory: 287Mi
         nvidia.com/gpu: 1
     nodeSelector:
       nvidia.com/gpu.present: "true"
