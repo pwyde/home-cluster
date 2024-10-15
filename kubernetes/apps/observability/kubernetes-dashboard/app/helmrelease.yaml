@@ -47,7 +47,7 @@ spec:
             memory: 122Mi
           limits:
             cpu: 50m
-            memory: 122Mi
+            memory: 132Mi
     auth:
       containers:
         resources:
@@ -64,3 +64,21 @@ spec:
           memory: 173Mi
         limits:
           memory: 183Mi
+    metricsScraper:
+      containers:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
+    web:
+      containers:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            cpu: 50m
+            memory: 110Mi
