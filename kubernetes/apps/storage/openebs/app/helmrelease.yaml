@@ -32,10 +32,6 @@ spec:
       replicated:
         mayastor:
           enabled: false
-    openebs-crds:
-      csi:
-        volumeSnapshots:
-          enabled: false
     localpv-provisioner:
       localpv:
         image:
@@ -48,3 +44,13 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: /var/openebs/local
+      resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 110Mi
+    openebs-crds:
+      csi:
+        volumeSnapshots:
+          enabled: false
