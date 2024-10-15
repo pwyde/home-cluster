@@ -59,6 +59,12 @@ spec:
         retention_period: 14d
     singleBinary:
       replicas: 1
+      resources:
+        requests:
+          cpu: 13m
+          memory: 320Mi
+        limits:
+          memory: 330Mi
       persistence:
         enabled: true
         storageClass: truenas-ssd-iscsi
@@ -67,10 +73,6 @@ spec:
       replicas: 1
       image:
         registry: ghcr.io
-      service:
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: ${SVC_LOKI_IP}
       ingress:
         enabled: true
         ingressClassName: internal
@@ -82,6 +84,16 @@ spec:
         tls:
           - hosts:
               - *host
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
+      service:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_LOKI_IP}
     backend:
       replicas: 0
     read:
@@ -97,5 +109,11 @@ spec:
     test:
       enabled: false
     sidecar:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 108Mi
+        limits:
+          memory: 108Mi
       rules:
         searchNamespace: ALL
