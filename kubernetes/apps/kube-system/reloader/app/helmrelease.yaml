@@ -26,6 +26,13 @@ spec:
     fullnameOverride: *app
     reloader:
       readOnlyRootFileSystem: true
+      deployment:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 116Mi
+          limits:
+            memory: 126Mi
       podMonitor:
         enabled: true
         namespace: "{{ .Release.Namespace }}"
