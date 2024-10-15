@@ -51,6 +51,12 @@ spec:
       alertmanagerSpec:
         useExistingSecret: true
         configSecret: alertmanager
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 100Mi
         storage:
           volumeClaimTemplate:
             metadata:
@@ -99,6 +105,12 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
+      resources:
+        requests:
+          cpu: 10m
+          memory: 219Mi
+        limits:
+          memory: 219Mi
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
