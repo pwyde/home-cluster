@@ -33,6 +33,8 @@ spec:
     extraEnv:
       NVIDIA_DRIVER_CAPABILITIES: all
       NVIDIA_VISIBLE_DEVICES: all
+    nodeSelector:
+      nvidia.com/gpu.present: "true"
     resources:
       requests:
         cpu: 10m
@@ -41,8 +43,6 @@ spec:
       limits:
         memory: 287Mi
         nvidia.com/gpu: 1
-    nodeSelector:
-      nvidia.com/gpu.present: "true"
     runtimeClassName: nvidia
     serviceMonitor:
       enabled: true
