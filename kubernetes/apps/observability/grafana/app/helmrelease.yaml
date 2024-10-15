@@ -369,6 +369,12 @@ spec:
           gnetId: 11312
           revision: 9
           datasource: Prometheus
+    resources:
+      requests:
+        cpu: 30m
+        memory: 302Mi
+      limits:
+        memory: 312Mi
     sidecar:
       dashboards:
         enabled: true
