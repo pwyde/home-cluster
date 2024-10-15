@@ -39,14 +39,6 @@ spec:
         global:
           clusterName: ${CLUSTER_NAME}
           itemsPerPage: 50
-    auth:
-      containers:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 100Mi
-          limits:
-            memory: 100Mi
     api:
       containers:
         resources:
@@ -54,4 +46,21 @@ spec:
             cpu: 12m
             memory: 122Mi
           limits:
+            cpu: 50m
             memory: 122Mi
+    auth:
+      containers:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            cpu: 50m
+            memory: 100Mi
+    kong:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 173Mi
+        limits:
+          memory: 183Mi
