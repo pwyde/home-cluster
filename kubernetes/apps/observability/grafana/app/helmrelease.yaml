@@ -191,12 +191,6 @@ spec:
             url: http://alertmanager-operated.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
-        resources:
-          requests:
-            cpu: 80m
-            memory: 100Mi
-          limits:
-            memory: 110Mi
     dashboards:
       database:
         dragonfly:
@@ -390,10 +384,22 @@ spec:
         provider:
           disableDelete: true
           foldersFromFilesStructure: true
+        resources:
+          requests:
+            cpu: 54m
+            memory: 106Mi
+          limits:
+            memory: 116Mi
       datasources:
         enabled: true
         searchNamespace: ALL
         labelValue: ""
+        resources:
+          requests:
+            cpu: 80m
+            memory: 100Mi
+          limits:
+            memory: 110Mi
     plugins:
       - grafana-clock-panel
       - grafana-piechart-panel
