@@ -77,19 +77,19 @@ spec:
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 30
+            resources:
+              requests:
+                cpu: 433m
+                memory: 1167Mi
+                nvidia.com/gpu: 1 # Request 1 GPU.
+              limits:
+                # Disable during initial import of photographs.
+                memory: 2Gi
+                nvidia.com/gpu: 1
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 100m
-                memory: 1Gi
-                nvidia.com/gpu: 1 # Request 1 GPU.
-              limits:
-                # Disabled during initial import of photographs.
-                memory: 2Gi
-                nvidia.com/gpu: 1
       machine-learning:
         annotations: *annotations
         containers:
@@ -112,14 +112,14 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            securityContext: *securityContext
             resources:
               requests:
-                cpu: 100m
-                memory: 2Gi
-              # Disabled during initial import of photographs.
+                cpu: 107m
+                memory: 3850Mi
               limits:
+                # Disable during initial import of photographs.
                 memory: 4Gi
+            securityContext: *securityContext
     defaultPodOptions:
       nodeSelector:
         nvidia.com/gpu.present: "true"
