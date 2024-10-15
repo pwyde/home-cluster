@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: external-secrets
+  name: &app external-secrets
 spec:
   interval: 30m
   chart:
@@ -15,10 +15,12 @@ spec:
         name: external-secrets
         namespace: flux-system
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       strategy: rollback
       retries: 3
@@ -27,14 +29,51 @@ spec:
       namespace: security
   values:
     installCRDs: true
+    replicaCount: 2
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
+            app.kubernetes.io/instance: *app
+    leaderElect: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 10Mi
+      limits:
+        memory: 110Mi
     serviceMonitor:
       enabled: true
       interval: 1m
     webhook:
+      replicaCount: 2
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: external-secrets-cert-controller
+              app.kubernetes.io/instance: *app
       serviceMonitor:
         enabled: true
         interval: 1m
+      resources:
+        requests:
+          cpu: 10m
+          memory: 125Mi
+        limits:
+          memory: 135Mi
     certController:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 140Mi
+        limits:
+          memory: 150Mi
       serviceMonitor:
         enabled: true
         interval: 1m
