@@ -62,15 +62,16 @@ spec:
                     path: /health
                     port: *apiPort
                   initialDelaySeconds: 15
+            resources: &resources
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 110Mi
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            resources: &resources
-              requests:
-                cpu: 10m
-              limits:
-                memory: 256Mi
           sync:
             image:
               repository: docker.io/1password/connect-sync
@@ -104,8 +105,8 @@ spec:
                     path: /health
                     port: *syncPort
                   initialDelaySeconds: 15
-            securityContext: *securityContext
             resources: *resources
+            securityContext: *securityContext
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
