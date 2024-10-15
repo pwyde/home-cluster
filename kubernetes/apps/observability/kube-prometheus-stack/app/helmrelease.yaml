@@ -128,6 +128,12 @@ spec:
               sourceLabels:
                 - kubernetes_node
               targetLabel: instance
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100Mi
+        limits:
+          memory: 100Mi
     prometheusOperator:
       resources:
         requests:
