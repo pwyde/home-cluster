@@ -36,6 +36,12 @@ spec:
       localpv:
         image:
           registry: quay.io/
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 110Mi
       helperPod:
         image:
           registry: quay.io/
@@ -44,12 +50,6 @@ spec:
         name: openebs-hostpath
         isDefaultClass: false
         basePath: /var/openebs/local
-      resources:
-        requests:
-          cpu: 10m
-          memory: 100Mi
-        limits:
-          memory: 110Mi
     openebs-crds:
       csi:
         volumeSnapshots:
