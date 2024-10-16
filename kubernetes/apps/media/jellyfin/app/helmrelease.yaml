@@ -70,8 +70,8 @@ spec:
                   failureThreshold: 30
             resources:
               requests:
-                cpu: 213m
-                memory: 3188Mi
+                cpu: 200m
+                memory: 2Gi
                 nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 memory: 4Gi
