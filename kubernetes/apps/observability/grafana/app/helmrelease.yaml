@@ -372,9 +372,9 @@ spec:
     resources:
       requests:
         cpu: 30m
-        memory: 302Mi
+        memory: 128Mi
       limits:
-        memory: 312Mi
+        memory: 192Mi
     sidecar:
       dashboards:
         enabled: true
@@ -390,8 +390,8 @@ spec:
         labelValue: ""
       resources:
         requests:
-          cpu: 15m
-          memory: 64Mi
+          cpu: 10m
+          memory: 96Mi
         limits:
           memory: 128Mi
     plugins:

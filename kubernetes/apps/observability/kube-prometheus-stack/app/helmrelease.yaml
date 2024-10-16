@@ -108,9 +108,9 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 219Mi
+          memory: 128Mi
         limits:
-          memory: 219Mi
+          memory: 256Mi
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
@@ -131,23 +131,23 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 32Mi
         limits:
-          memory: 100Mi
+          memory: 64Mi
     prometheusOperator:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 32Mi
         limits:
-          memory: 100Mi
+          memory: 64Mi
       prometheusConfigReloader:
         resources:
           requests:
             cpu: 10m
-            memory: 100Mi
+            memory: 32Mi
           limits:
-            memory: 100Mi
+            memory: 64Mi
     prometheus:
       ingress:
         enabled: true
@@ -177,7 +177,7 @@ spec:
         resources:
           requests:
             cpu: 300m
-            memory: 1723Mi
+            memory: 1536Mi
           limits:
             memory: 2Gi
         storageSpec:
