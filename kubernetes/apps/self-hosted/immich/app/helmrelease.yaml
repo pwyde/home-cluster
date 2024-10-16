@@ -79,8 +79,8 @@ spec:
                   failureThreshold: 30
             resources:
               requests:
-                cpu: 433m
-                memory: 1167Mi
+                cpu: 500m
+                memory: 1Gi
                 nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 # Disable during initial import of photographs.
@@ -114,8 +114,8 @@ spec:
               readiness: *probes
             resources:
               requests:
-                cpu: 107m
-                memory: 3850Mi
+                cpu: 100m
+                memory: 2Gi
               limits:
                 # Disable during initial import of photographs.
                 memory: 4Gi
