@@ -61,10 +61,10 @@ spec:
       replicas: 1
       resources:
         requests:
-          cpu: 13m
-          memory: 320Mi
+          cpu: 10m
+          memory: 256Mi
         limits:
-          memory: 330Mi
+          memory: 512Mi
       persistence:
         enabled: true
         storageClass: truenas-ssd-iscsi
@@ -87,9 +87,9 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 24Mi
         limits:
-          memory: 100Mi
+          memory: 32Mi
       service:
         type: LoadBalancer
         annotations:
@@ -112,8 +112,8 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 108Mi
+          memory: 128Mi
         limits:
-          memory: 108Mi
+          memory: 192Mi
       rules:
         searchNamespace: ALL
