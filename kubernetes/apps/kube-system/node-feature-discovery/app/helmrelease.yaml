@@ -29,9 +29,9 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 64Mi
         limits:
-          memory: 110Mi
+          memory: 128Mi
     worker:
       config:
         core:
@@ -39,15 +39,15 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 48Mi
         limits:
-          memory: 110Mi
+          memory: 64Mi
     gc:
       resources:
         requests:
           cpu: 10m
-          memory: 100Mi
+          memory: 64Mi
         limits:
-          memory: 110Mi
+          memory: 128Mi
     prometheus:
       enable: true
