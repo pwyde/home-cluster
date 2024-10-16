@@ -42,9 +42,9 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 10Mi
+        memory: 32Mi
       limits:
-        memory: 110Mi
+        memory: 64Mi
     serviceMonitor:
       enabled: true
       interval: 1m
@@ -64,16 +64,16 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 125Mi
+          memory: 32Mi
         limits:
-          memory: 135Mi
+          memory: 64Mi
     certController:
       resources:
         requests:
           cpu: 10m
-          memory: 140Mi
+          memory: 48Mi
         limits:
-          memory: 150Mi
+          memory: 96Mi
       serviceMonitor:
         enabled: true
         interval: 1m
