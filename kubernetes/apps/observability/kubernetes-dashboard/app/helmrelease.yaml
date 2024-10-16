@@ -43,42 +43,38 @@ spec:
       containers:
         resources:
           requests:
-            cpu: 12m
-            memory: 122Mi
+            cpu: 10m
+            memory: 32Mi
           limits:
-            cpu: 50m
-            memory: 132Mi
+            memory: 64Mi
     auth:
       containers:
         resources:
           requests:
             cpu: 10m
-            memory: 100Mi
+            memory: 24Mi
           limits:
-            cpu: 50m
-            memory: 100Mi
+            memory: 32Mi
     kong:
       resources:
         requests:
           cpu: 10m
-          memory: 173Mi
+          memory: 128Mi
         limits:
-          memory: 183Mi
+          memory: 192Mi
     metricsScraper:
       containers:
         resources:
           requests:
             cpu: 10m
-            memory: 100Mi
+            memory: 24Mi
           limits:
-            cpu: 50m
-            memory: 100Mi
+            memory: 32Mi
     web:
       containers:
         resources:
           requests:
             cpu: 10m
-            memory: 100Mi
+            memory: 16Mi
           limits:
-            cpu: 50m
-            memory: 110Mi
+            memory: 24Mi
