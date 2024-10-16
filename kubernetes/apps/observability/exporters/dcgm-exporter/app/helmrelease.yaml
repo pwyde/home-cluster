@@ -38,10 +38,10 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 287Mi
+        memory: 256Mi
         nvidia.com/gpu: 1
       limits:
-        memory: 287Mi
+        memory: 384Mi
         nvidia.com/gpu: 1
     runtimeClassName: nvidia
     serviceMonitor:
