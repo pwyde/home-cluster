@@ -115,7 +115,7 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 2Gi
+                memory: 3Gi
               limits:
                 # Disable during initial import of photographs.
                 memory: 4Gi

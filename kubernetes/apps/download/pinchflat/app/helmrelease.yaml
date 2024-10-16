@@ -55,7 +55,7 @@ spec:
               readiness: *probes
             resources:
               requests:
-                cpu: 10m
+                cpu: 100m
                 memory: 256Mi
               limits:
                 memory: 2Gi
