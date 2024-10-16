@@ -173,15 +173,15 @@ spec:
               startup: *probes
             resources:
               requests:
-                cpu: 177m
-                memory: 611Mi
+                cpu: 100m
+                memory: 512Mi
                 # Request the /dev/net/tun device that is exposed on the node
                 # using generic-device-plugin. For more information, see:
                 # - https://www.talos.dev/v1.8/introduction/what-is-new/#accessing-devnettun-in-kubernetes-pods
                 # - https://www.talos.dev/v1.8/kubernetes-guides/configuration/device-plugins/
                 squat.ai/tun: "1"
               limits:
-                memory: 621Mi
+                memory: 768Mi
                 squat.ai/tun: "1"
             securityContext:
               allowPrivilegeEscalation: false
@@ -198,10 +198,10 @@ spec:
               - --root=/addons
             resources:
               requests:
-                cpu: 13m
-                memory: 100Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
-                memory: 110Mi
+                memory: 64Mi
     defaultPodOptions:
       securityContext:
         fsGroup: &gid 4000
