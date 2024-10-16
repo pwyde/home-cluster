@@ -128,9 +128,9 @@ spec:
             resources:
               requests:
                 cpu: 100m
-                memory: 1776Mi
+                memory: 2Gi
               limits:
-                memory: 1786Mi
+                memory: 3Gi
             securityContext:
               runAsNonRoot: true
               runAsUser: &uid 5000
