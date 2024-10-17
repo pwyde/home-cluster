@@ -58,9 +58,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 280Mi
+                memory: 256Mi
               limits:
-                memory: 290Mi
+                memory: 384Mi
     defaultPodOptions:
       securityContext:
         # https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html#mapped-files-and-directories
