@@ -97,7 +97,10 @@ spec:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.118.2@sha256:4d89a309fd08a93649f1ae4a7572ae98f09d66b4c1dfb7916b71d31dec7eda38
-            env: *env
+            env:
+              <<: *env
+              NVIDIA_VISIBLE_DEVICES: "all"
+              NVIDIA_DRIVER_CAPABILITIES: "all"
             envFrom: *envFrom
             probes:
               liveness: &probes
