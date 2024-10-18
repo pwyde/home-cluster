@@ -125,14 +125,17 @@ spec:
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-            paths:
+            paths: &paths
               - path: /
                 service:
                   identifier: app
                   port: http
+          - host: &customHost search.${SECRET_DOMAIN}
+            paths: *paths
         tls:
           - hosts:
               - *host
+              - *customHost
     persistence:
       config:
         type: configMap
