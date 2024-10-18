@@ -1,0 +1,152 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app searxng
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      searxng:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          searxng:
+            image:
+              repository: docker.io/searxng/searxng
+              tag: 2024.10.4-3e747d049@sha256:8afd2f3ddc32a001ff965e50b1b50f0c3aa89aa92b9f8746022d9aeb12bbca24
+            env:
+              TZ: &tz ${CONFIG_TIMEZONE}
+              SEARXNG_BASE_URL: https://search.${SECRET_DOMAIN}
+              SEARXNG_URL: https://search.${SECRET_DOMAIN}
+              SEARXNG_PORT: &port 8080
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /stats
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: &uid 65534
+              runAsGroup: *uid
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.39.1@sha256:cb9183810872906d600327d29c93b80ce9de1e3e21f188f65b4a70a15afc6e32
+            env:
+              TZ: *tz
+              # Ports to allow through the default interface. This is needed for Kubernetes sidecars.
+              FIREWALL_INPUT_PORTS: "8080,9999"
+              # Internal health check server listening address.
+              HEALTH_SERVER_ADDRESS: ":9999"
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: wireguard
+              VPN_INTERFACE: wg0
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9999
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 10
+                  failureThreshold: 5
+              startup: *probes
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+                # Request the /dev/net/tun device that is exposed on the node
+                # using generic-device-plugin. For more information, see:
+                # - https://www.talos.dev/v1.8/introduction/what-is-new/#accessing-devnettun-in-kubernetes-pods
+                # - https://www.talos.dev/v1.8/kubernetes-guides/configuration/device-plugins/
+                squat.ai/tun: "1"
+              limits:
+                memory: 768Mi
+                squat.ai/tun: "1"
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { add: ["NET_ADMIN"] }
+    defaultPodOptions:
+      securityContext:
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        type: configMap
+        name: searxng-config
+        advancedMounts:
+          searxng:
+            searxng:
+              - path: /etc/searxng/limiter.toml
+                subPath: limiter.toml
+                readOnly: true
+              - path: /etc/searxng/settings.yml
+                subPath: settings.yml
+                readOnly: true
+      searxng:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/searxng
