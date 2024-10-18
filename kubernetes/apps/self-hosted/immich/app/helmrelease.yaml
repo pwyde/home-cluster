@@ -32,7 +32,7 @@ spec:
         annotations: &annotations
           reloader.stakater.com/auto: "true"
         containers:
-          immich:
+          immich-server:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.118.2@sha256:f158810c90f80162f9b08729bbaec963731f12662960be38ff93093b78a0bbdf
@@ -86,10 +86,10 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-      machine-learning:
+      immich-machine-learning:
         annotations: *annotations
         containers:
-          machine-learning:
+          immich-machine-learning:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.118.2-cuda@sha256:7bb350bf80e26296653df53b3469baed8bb06d50297db876ab0dfe537c006342
@@ -147,8 +147,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
-      immich:
-        controller: *app
+      immich-server:
+        controller: immich-server
         ports:
           http:
             port: *port
@@ -156,14 +156,14 @@ spec:
             port: 8081
           metrics-ms:
             port: 8082
-      machine-learning:
-        controller: machine-learning
+      immich-machine-learning:
+        controller: immich-machine-learning
         ports:
           http:
             port: *mlPort
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: immich-server
         endpoints:
           - port: metrics-api
             scheme: http
@@ -186,7 +186,7 @@ spec:
             paths: &paths
               - path: /
                 service:
-                  identifier: *app
+                  identifier: immich-server
                   port: http
           - host: &customHost foto.${SECRET_DOMAIN}
             paths: *paths
