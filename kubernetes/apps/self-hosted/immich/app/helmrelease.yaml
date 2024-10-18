@@ -92,7 +92,7 @@ spec:
           machine-learning:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.118.2@sha256:4d89a309fd08a93649f1ae4a7572ae98f09d66b4c1dfb7916b71d31dec7eda38
+              tag: v1.118.2-cuda@sha256:7bb350bf80e26296653df53b3469baed8bb06d50297db876ab0dfe537c006342
             env:
               <<: *env
               # Pre-loading of ML model must not be enabled during initial de-
@@ -119,9 +119,11 @@ spec:
               requests:
                 cpu: 100m
                 memory: 3Gi
+                nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 # Disable during initial import of photographs.
                 memory: 4Gi
+                nvidia.com/gpu: 1
             securityContext: *securityContext
     defaultPodOptions:
       nodeSelector:
