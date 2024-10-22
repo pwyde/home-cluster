@@ -20,6 +20,8 @@ resources:
   - ./node-feature-discovery.yaml
   - ./nvidia-dcgm.yaml
   - ./nvidia-device-plugin.yaml
+  - ./ollama.yaml
+  - ./open-webui.yaml
   - ./openebs.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
