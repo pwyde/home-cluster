@@ -115,7 +115,7 @@ use_default_settings:
 engines:
   # General / Web
   - name: startpage
-    disabled: false
+    disabled: true
   # General / Without further subgrouping
   - name: tineye
     disabled: false
