@@ -6648,7 +6648,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "browser",
+  "timezone": "",
   "title": "Exportarr",
   "uid": "af7d8189-f5fb-4a79-90c4-70746ffc07eb",
   "version": 1,

@@ -4848,7 +4848,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "browser",
+  "timezone": "",
   "title": "S.M.A.R.T (smartctl)",
   "uid": "0e76d831-330f-4fdd-b15e-2264b46b9462",
   "version": 1,
