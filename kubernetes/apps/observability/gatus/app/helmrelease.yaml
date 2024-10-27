@@ -129,6 +129,8 @@ spec:
               - *customHost
     persistence:
       config:
+        type: emptyDir
+      config-file:
         type: configMap
         name: gatus-config
         globalMounts:
