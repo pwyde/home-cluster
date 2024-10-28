@@ -73,9 +73,6 @@ spec:
             port: 3000
     ingress:
       app:
-        annotations:
-          # Fix Jellystat with error-pages.
-          nginx.ingress.kubernetes.io/custom-http-errors: "599"
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

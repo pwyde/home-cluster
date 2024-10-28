@@ -103,9 +103,6 @@ spec:
             port: *port
     ingress:
       app:
-        annotations:
-          # Fix Bazarr with error-pages.
-          nginx.ingress.kubernetes.io/custom-http-errors: "599"
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

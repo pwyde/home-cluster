@@ -79,9 +79,6 @@ spec:
             port: *port
     ingress:
       app:
-        annotations:
-          # Annotation must be set to avoid error. For more information, see https://github.com/Fallenbagel/jellyseerr/issues/878#issuecomment-2278371998
-          nginx.ingress.kubernetes.io/custom-http-errors: "599"
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"

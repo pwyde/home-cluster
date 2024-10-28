@@ -57,8 +57,6 @@ spec:
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
-        custom-http-errors: >-
-          401,403,404,500,501,502,503
         enable-brotli: "true"
         enable-ocsp: "true"
         enable-real-ip: "true"
@@ -105,22 +103,4 @@ spec:
         limits:
           memory: 256Mi
     defaultBackend:
-      enabled: true
-      name: default-backend
-      image:
-        repository: ghcr.io/tarampampam/error-pages
-        tag: 3.3.0
-      replicaCount: 1
-      extraEnvs:
-        - name: DISABLE_L10N
-          value: "true"
-        - name: SHOW_DETAILS
-          value: "false"
-        - name: TEMPLATE_NAME
-          value: l7
-      resources:
-        requests:
-          cpu: 10m
-          memory: 24Mi
-        limits:
-          memory: 32Mi
+      enabled: false
