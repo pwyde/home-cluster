@@ -35,4 +35,3 @@ spec:
       VOLSYNC_CAPACITY: &capacity 1Gi
       VOLSYNC_CACHE_CAPACITY: *capacity
       VOLSYNC_TIME: "15 3 * * *"
-      GATUS_SUBDOMAIN: qbit

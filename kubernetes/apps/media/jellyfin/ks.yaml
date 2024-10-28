@@ -35,4 +35,3 @@ spec:
       VOLSYNC_CAPACITY: &capacity 8Gi
       VOLSYNC_CACHE_CAPACITY: *capacity
       VOLSYNC_TIME: "0 3 * * *"
-      GATUS_PATH: /web/index.html
