@@ -49,6 +49,6 @@ spec:
       # Talos schematic ID for nodes with NVIDIA GPU present.
       TALOS_SCHEMATIC_ID_GPU: 3d572bade939d3fe0ca708c296bd33493987a49bc2f4cc7593d7cedb034750bc
       # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-      TALOS_VERSION: v1.8.1
+      TALOS_VERSION: v1.8.2
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
       KUBERNETES_VERSION: v1.31.2
