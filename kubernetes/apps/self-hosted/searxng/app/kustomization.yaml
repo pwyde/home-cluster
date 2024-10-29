@@ -10,5 +10,8 @@ configMapGenerator:
     files:
       - limiter.toml=./resources/limiter.toml
       - settings.yml=./resources/settings.yaml
+  - name: dnsdist-config
+    files:
+      - dnsdist.conf=./resources/dnsdist.conf
 generatorOptions:
   disableNameSuffixHash: true

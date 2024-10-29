@@ -63,19 +63,38 @@ spec:
                 memory: 512Mi
               limits:
                 memory: 2Gi
-            securityContext:
+            securityContext: &securityContext
               runAsNonRoot: true
               runAsUser: &uid 65534
               runAsGroup: *uid
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-19
+              tag: 1.9.7@sha256:6ed810f4d5da4585ccfc2667a794a78319ff2960a43266fc6a160c063d04e1ef
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 128Mi
+            securityContext: *securityContext
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.39.1@sha256:cb9183810872906d600327d29c93b80ce9de1e3e21f188f65b4a70a15afc6e32
             env:
               TZ: *tz
+              DNS_ADDRESS: "127.0.0.2"
+              # Disable DNS over TLS. Available using dnsdist instead.
+              DOT: off
               # Ports to allow through the default interface. This is needed for Kubernetes sidecars.
               FIREWALL_INPUT_PORTS: "8080,9999"
               # Allow access to K8s subnets.
@@ -142,22 +161,27 @@ spec:
               - *host
               - *customHost
     persistence:
-      config:
+      dnsdist-config:
         type: configMap
-        name: searxng-config
-        advancedMounts:
-          searxng:
-            searxng:
-              - path: /etc/searxng/limiter.toml
-                subPath: limiter.toml
-                readOnly: true
-              - path: /etc/searxng/settings.yml
-                subPath: settings.yml
-                readOnly: true
+        name: dnsdist-config
+        globalMounts:
+          - path: /etc/dnsdist/dnsdist.conf
+            subPath: dnsdist.conf
+            readOnly: true
       searxng:
         type: emptyDir
         globalMounts:
           - path: /etc/searxng
+      searxng-config:
+        type: configMap
+        name: searxng-config
+        globalMounts:
+          - path: /etc/searxng/limiter.toml
+            subPath: limiter.toml
+            readOnly: true
+          - path: /etc/searxng/settings.yml
+            subPath: settings.yml
+            readOnly: true
       tmp:
         type: emptyDir
         globalMounts:
