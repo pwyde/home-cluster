@@ -210,6 +210,13 @@
       "matchPackagePatterns": ["minio"],
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$"
     },
+    // loose versioning
+    {
+      "description": ["Loose versioning for non-semver packages"],
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["searxng"],
+      "versioning": "loose"
+    },
     // grafana dashboards
     {
       "addLabels": ["renovate/grafana-dashboard"],
