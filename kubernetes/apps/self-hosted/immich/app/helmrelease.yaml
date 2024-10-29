@@ -35,13 +35,13 @@ spec:
           server:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v1.118.2@sha256:f158810c90f80162f9b08729bbaec963731f12662960be38ff93093b78a0bbdf
+              tag: v1.119.0@sha256:24df1172544370826349159692d177ba22ca773c81857d36996a254c08422b95
             env: &env
               TZ: ${CONFIG_TIMEZONE}
               IMMICH_CONFIG_FILE: /config/immich.json
               IMMICH_LOG_LEVEL: verbose
               IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning.self-hosted.svc.cluster.local:3003
-              IMMICH_METRICS: "true"
+              IMMICH_TELEMETRY_INCLUDE: all
               REDIS_HOSTNAME: dragonfly.database.svc.cluster.local
               REDIS_PORT: "6379"
               REDIS_DBINDEX: "3"
