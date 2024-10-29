@@ -1,0 +1,136 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ollama
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: democratic-csi-iscsi
+      namespace: storage
+  values:
+    controllers:
+      ollama:
+        containers:
+          ollama:
+            image:
+              repository: docker.io/ollama/ollama
+              tag: 0.3.14@sha256:561e07c87e23bc160313041160f67eccd4f1e066cd03434771566d0c69e64db2
+            env:
+              TZ: ${CONFIG_TIMEZONE}
+              OLLAMA_HOST: 0.0.0.0
+              OLLAMA_ORIGINS: "*"
+              OLLAMA_MODELS: &modelPath /models
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+                nvidia.com/gpu: 1 # Request 1 GPU.
+              limits:
+                memory: 8Gi
+                nvidia.com/gpu: 1
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+      pull-models:
+        type: job
+        job:
+          ttlSecondsAfterFinished: 300
+        containers:
+          pull-models:
+            image:
+              repository: docker.io/curlimages/curl
+              tag: 8.10.1@sha256:fcff5cf7a4b895da7bd2933c914938db2b05d2113fa0d6c55b6d29930408f661
+            command:
+              - /bin/sh
+              - -c
+              - |
+                url="http://ollama.ai.svc.cluster.local:11434"
+                models="llama3.2 nomic-embed-text"
+                while true; do
+                  response=$(curl -s -o /dev/null -w "%{http_code}" "$url")
+                  if [ "$response" -eq 200 ]; then
+                    echo "Ollama is online."
+                    break
+                  else
+                    echo "Ollama is unreachable. Retrying in 5 seconds..."
+                    sleep 5
+                  fi
+                done
+                for model in $models; do
+                  echo "Pulling model: $model"
+                  curl "$url/api/pull" -d "{\"name\": \"$model\"}"
+                done
+    defaultPodOptions:
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nvidia.com/gpu.present
+                operator: In
+                values:
+                  - "true"
+      runtimeClassName: nvidia
+      priorityClassName: gpu-priority
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: &uid 5000
+        runAsGroup: *uid
+        fsGroup: *uid
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: 11434
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      models:
+        existingClaim: *app
+        globalMounts:
+          - path: *modelPath
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /.ollama
