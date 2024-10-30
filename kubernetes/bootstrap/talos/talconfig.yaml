@@ -5,174 +5,147 @@ talosVersion: v1.8.2
 # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
 kubernetesVersion: v1.31.2
 
-clusterName: "${clusterName}"
-endpoint: https://${clusterName}.${secretDomain}:6443
+clusterName: ${clusterName}
+endpoint: https://${clusterName}.${clusterDNSSuffix}:6443
 clusterPodNets:
-  - "10.69.0.0/16"
+  - 10.69.0.0/16
 clusterSvcNets:
-  - "10.96.0.0/16"
+  - 10.96.0.0/16
 additionalApiServerCertSans: &sans
-  - "${clusterEndpointIP}"
+  - ${clusterEndpointIP}
   - 127.0.0.1 # KubePrism
-  - "k8s.${secretDomain}"
-  - "kubernetes.${secretDomain}"
-  - "home-k8s.${secretDomain}"
-  - "home-kubernetes.${secretDomain}"
-  - "home-cluster.${secretDomain}"
+  - k8s.${clusterDNSSuffix}
+  - kubernetes.${clusterDNSSuffix}
+  - home-k8s.${clusterDNSSuffix}
+  - home-kubernetes.${clusterDNSSuffix}
+  - home-cluster.${clusterDNSSuffix}
 additionalMachineCertSans: *sans
 
-# Disable built-in Flannel to use Cilium
+# Disable built-in Flannel to use Cilium.
 cniConfig:
   name: none
 
 nodes:
-  - hostname: "k8s-1"
-    ipAddress: "192.168.20.21"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+  - hostname: k8s-1
+    ipAddress: 192.168.20.21
+    installDisk: /dev/sda
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:45:85:07"
+          hardwareAddr: bc:24:11:45:85:07
         dhcp: false
         addresses:
-          - "192.168.20.21/24"
+          - 192.168.20.21/24
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.20.1"
+            gateway: 192.168.20.1
         mtu: 1500
-        vip:
-          ip: "${clusterEndpointIP}"
+        vip: &vip
+          ip: ${clusterEndpointIP}
       - deviceSelector:
-          hardwareAddr: "bc:24:11:b2:24:ea"
+          hardwareAddr: bc:24:11:b2:24:ea
         dhcp: false
         addresses:
-          - "10.0.100.21/24"
+          - 10.0.100.21/24
         routes:
           - network: 10.0.100.0/24
-            gateway: "10.0.100.1"
+            gateway: 10.0.100.1
         mtu: 1500
-    schematic:
-      customization:
-        extraKernelArgs:
-          - net.ifnames=0
-  - hostname: "k8s-2"
-    ipAddress: "192.168.20.22"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+  - hostname: k8s-2
+    ipAddress: 192.168.20.22
+    installDisk: /dev/sda
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:61:9a:bd"
+          hardwareAddr: bc:24:11:61:9a:bd
         dhcp: false
         addresses:
-          - "192.168.20.22/24"
+          - 192.168.20.22/24
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.20.1"
+            gateway: 192.168.20.1
         mtu: 1500
-        vip:
-          ip: "${clusterEndpointIP}"
+        vip: *vip
       - deviceSelector:
-          hardwareAddr: "bc:24:11:36:a6:12"
+          hardwareAddr: bc:24:11:36:a6:12
         dhcp: false
         addresses:
-          - "10.0.100.22/24"
+          - 10.0.100.22/24
         routes:
           - network: 10.0.100.0/24
-            gateway: "10.0.100.1"
+            gateway: 10.0.100.1
         mtu: 1500
-    schematic:
-      customization:
-        extraKernelArgs:
-          - net.ifnames=0
-  - hostname: "k8s-3"
-    ipAddress: "192.168.20.23"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+  - hostname: k8s-3
+    ipAddress: 192.168.20.23
+    installDisk: /dev/sda
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:17:18:1c"
+          hardwareAddr: bc:24:11:17:18:1c
         dhcp: false
         addresses:
-          - "192.168.20.23/24"
+          - 192.168.20.23/24
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.20.1"
+            gateway: 192.168.20.1
         mtu: 1500
-        vip:
-          ip: "${clusterEndpointIP}"
+        vip: *vip
       - deviceSelector:
-          hardwareAddr: "bc:24:11:38:69:43"
+          hardwareAddr: bc:24:11:38:69:43
         dhcp: false
         addresses:
-          - "10.0.100.23/24"
+          - 10.0.100.23/24
         routes:
           - network: 10.0.100.0/24
-            gateway: "10.0.100.1"
+            gateway: 10.0.100.1
         mtu: 1500
-    schematic:
-      customization:
-        extraKernelArgs:
-          - net.ifnames=0
-  - hostname: "k8s-4"
-    ipAddress: "192.168.20.24"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+  - hostname: k8s-4
+    ipAddress: 192.168.20.24
+    installDisk: /dev/sda
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:6b:de:e7"
+          hardwareAddr: bc:24:11:6b:de:e7
         dhcp: false
         addresses:
-          - "192.168.20.24/24"
+          - 192.168.20.24/24
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.20.1"
+            gateway: 192.168.20.1
         mtu: 1500
       - deviceSelector:
-          hardwareAddr: "bc:24:11:22:15:3c"
+          hardwareAddr: bc:24:11:22:15:3c
         dhcp: false
         addresses:
-          - "10.0.100.24/24"
+          - 10.0.100.24/24
         routes:
           - network: 10.0.100.0/24
-            gateway: "10.0.100.1"
+            gateway: 10.0.100.1
         mtu: 1500
-    schematic:
-      customization:
-        extraKernelArgs:
-          - net.ifnames=0
-  - hostname: "k8s-5"
-    ipAddress: "192.168.20.25"
-    installDisk: "/dev/sda"
-    talosImageURL: factory.talos.dev/installer/3d572bade939d3fe0ca708c296bd33493987a49bc2f4cc7593d7cedb034750bc
+  - hostname: k8s-5
+    ipAddress: 192.168.20.25
+    installDisk: /dev/sda
     controlPlane: false
     networkInterfaces:
       - deviceSelector:
-          hardwareAddr: "bc:24:11:f3:16:57"
+          hardwareAddr: bc:24:11:f3:16:57
         dhcp: false
         addresses:
-          - "192.168.20.25/24"
+          - 192.168.20.25/24
         routes:
           - network: 0.0.0.0/0
-            gateway: "192.168.20.1"
+            gateway: 192.168.20.1
         mtu: 1500
       - deviceSelector:
-          hardwareAddr: "bc:24:11:f4:87:0d"
+          hardwareAddr: bc:24:11:f4:87:0d
         dhcp: false
         addresses:
-          - "10.0.100.25/24"
+          - 10.0.100.25/24
         routes:
           - network: 10.0.100.0/24
-            gateway: "10.0.100.1"
+            gateway: 10.0.100.1
         mtu: 1500
-    kernelModules:
-      - name: nvidia
-      - name: nvidia_uvm
-      - name: nvidia_drm
-      - name: nvidia_modeset
+    # Node specific schematic. Overrides global worker configurations.
     schematic:
       customization:
         extraKernelArgs:
@@ -186,13 +159,9 @@ nodes:
             - siderolabs/qemu-guest-agent
             - siderolabs/util-linux-tools
     patches:
-      - |-
-        machine:
-          sysctls:
-            net.core.bpf_jit_harden: 1
-            vm.nr_hugepages: "1024"
+      - "@./patches/gpu/nvidia-gpu.yaml"
 
-# Global patches
+# Global configurations and patches.
 patches:
   - "@./patches/global/cluster-discovery.yaml"
   - "@./patches/global/containerd.yaml"
@@ -204,11 +173,24 @@ patches:
   - "@./patches/global/openebs-local.yaml"
   - "@./patches/global/sysctl.yaml"
 
-# Controller patches
+# Controller configurations and patches.
 controlPlane:
+  schematic: &schematic
+    customization:
+      extraKernelArgs:
+        - net.ifnames=0
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/amd-ucode
+          - siderolabs/iscsi-tools
+          - siderolabs/qemu-guest-agent
+          - siderolabs/util-linux-tools
   patches:
     - "@./patches/controller/api-access.yaml"
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"
 
+# Worker configurations and patches.
+worker:
+  schematic: *schematic
