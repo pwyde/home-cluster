@@ -45,9 +45,9 @@ spec:
   postBuild:
     substitute:
       # Talos schematic ID for standard (general-purpose) nodes.
-      TALOS_SCHEMATIC_ID_STANDARD: 2d9d79fe710caccded6d4b221e24a5e8316073f66b3061b6f2c49de07684c812
+      TALOS_SCHEMATIC_ID_STANDARD: 8b583b5320ff41bf40bd1aea9287923ada45e32a1e2ba0045cb3f6758920ef4a
       # Talos schematic ID for nodes with NVIDIA GPU present.
-      TALOS_SCHEMATIC_ID_GPU: 3d572bade939d3fe0ca708c296bd33493987a49bc2f4cc7593d7cedb034750bc
+      TALOS_SCHEMATIC_ID_GPU: 469f1d8d549c51d8f94afea6f5f6eb9b850fe5876b65c761c3164bc82fab12a6
       # renovate: datasource=docker depName=ghcr.io/siderolabs/installer
       TALOS_VERSION: v1.8.2
       # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
