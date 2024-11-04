@@ -7,5 +7,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./dokuwiki/ks.yaml
-  # - ./immich/ks.yaml
+  - ./immich/ks.yaml
   - ./searxng/ks.yaml
