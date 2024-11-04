@@ -80,7 +80,7 @@ spec:
                 nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 # Disable during initial import of photographs.
-                memory: 2Gi
+                # memory: 2Gi
                 nvidia.com/gpu: 1
             securityContext: &securityContext
               allowPrivilegeEscalation: false
@@ -122,7 +122,7 @@ spec:
                 nvidia.com/gpu: 1 # Request 1 GPU.
               limits:
                 # Disable during initial import of photographs.
-                memory: 12Gi
+                # memory: 8Gi
                 nvidia.com/gpu: 1
             securityContext: *securityContext
     defaultPodOptions:
