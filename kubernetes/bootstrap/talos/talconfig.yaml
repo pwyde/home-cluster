@@ -13,12 +13,12 @@ clusterSvcNets:
   - 10.96.0.0/16
 additionalApiServerCertSans: &sans
   - ${clusterEndpointIP}
-  - 127.0.0.1 # KubePrism
   - k8s.${clusterDNSSuffix}
   - kubernetes.${clusterDNSSuffix}
   - home-k8s.${clusterDNSSuffix}
   - home-kubernetes.${clusterDNSSuffix}
   - home-cluster.${clusterDNSSuffix}
+  - 127.0.0.1
 additionalMachineCertSans: *sans
 
 # Disable built-in Flannel to use Cilium.
