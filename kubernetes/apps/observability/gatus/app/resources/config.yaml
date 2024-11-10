@@ -11,6 +11,13 @@ debug: false
 ui:
   title: Status | Gatus
   header: Status
+  logo: https://github.com/pwyde/home-cluster/blob/f17609111a49cee83c1256d2a5ee73405b81dc69/docs/assets/img/logo.pngw
+  link: https://github.com/pwyde
+  buttons:
+    - name: Github
+      link: https://github.com/pwyde
+    - name: Homelab
+      link: https://github.com/pwyde/home-cluster
 alerting:
   pushover:
     title: Gatus
