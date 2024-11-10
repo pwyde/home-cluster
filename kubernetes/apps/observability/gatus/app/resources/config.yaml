@@ -11,7 +11,7 @@ debug: false
 ui:
   title: Status | Gatus
   header: Status
-  logo: https://github.com/pwyde/home-cluster/blob/f17609111a49cee83c1256d2a5ee73405b81dc69/docs/assets/img/logo.pngw
+  logo: https://github.com/pwyde/home-cluster/blob/0fcf2934005b3605c259226db9f05e9fb2ee6198/docs/assets/img/logo.png
   link: https://github.com/pwyde
   buttons:
     - name: Github
