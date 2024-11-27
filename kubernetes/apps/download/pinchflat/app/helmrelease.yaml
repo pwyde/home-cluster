@@ -94,6 +94,10 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
       tmp:
         type: emptyDir
+      yt-dlp:
+        type: emptyDir
+        globalMounts:
+          - path: /etc/yt-dlp
       downloads:
         type: nfs
         server: ${SECRET_NAS_IP}
