@@ -41,7 +41,7 @@ spec:
           open-webui:
             image:
               repository: ghcr.io/open-webui/open-webui
-              tag: v0.4.4@sha256:0e3fce4190c1db7f03df3ca8e55ac26723e04a068c017db0f049bbfde7ee0347
+              tag: 0.4.6@sha256:01fe71e722088474496064ff781631698898cd9cbf37a7a7a7a89da3e3dc975e
             env:
               TZ: ${CONFIG_TIMEZONE}
               UID: &uid 5000
