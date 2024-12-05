@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
@@ -22,6 +23,7 @@ spec:
     - extract:
         key: minio
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 # The backup policy: target, frequency and retention.
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -50,6 +52,7 @@ spec:
       daily: 7
       within: 3d
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
 # Used for restores.
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
