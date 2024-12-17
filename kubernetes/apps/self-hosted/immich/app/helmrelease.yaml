@@ -92,7 +92,7 @@ spec:
           machine-learning:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v1.122.3-cuda@sha256:77c306c17144344f5d9bc1aaede86a67af721ac4cb302bb9e0a17e40d441f124
+              tag: v1.123.0-cuda@sha256:c6ac56b2147dc716c4813c14ffc66b3aa91b0e1aaa74493a3a77d97cf4a98d7a
             env:
               <<: *env
               # Pre-loading of ML model must not be enabled during initial de-
