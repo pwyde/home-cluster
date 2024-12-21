@@ -76,7 +76,7 @@ spec:
             #   capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: true
+        # runAsNonRoot: true
         runAsUser: &uid 5000
         runAsGroup: *uid
         fsGroup: *uid
