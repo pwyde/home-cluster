@@ -163,7 +163,6 @@ nodes:
 
 # Global configurations and patches.
 patches:
-  - "@./patches/global/cluster-discovery.yaml"
   - "@./patches/global/containerd.yaml"
   - "@./patches/global/disable-search-domain.yaml"
   - "@./patches/global/dns.yaml"
@@ -186,7 +185,6 @@ controlPlane:
           - siderolabs/qemu-guest-agent
           - siderolabs/util-linux-tools
   patches:
-    - "@./patches/controller/api-access.yaml"
     - "@./patches/controller/cluster.yaml"
     - "@./patches/controller/disable-admission-controller.yaml"
     - "@./patches/controller/etcd.yaml"
