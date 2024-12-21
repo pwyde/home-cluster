@@ -51,6 +51,7 @@ spec:
               ND_SCANSCHEDULE: '@every 1h'
               ND_SESSIONTIMEOUT: '72h'
               ND_TRANSCODINGCACHESIZE: '512MB'
+              ND_ENABLEINSIGHTSCOLLECTOR: false
             probes:
               liveness: &probes
                 enabled: true
