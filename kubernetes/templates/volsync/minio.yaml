@@ -75,3 +75,6 @@ spec:
       runAsUser: "${APP_UID:-5000}"
       runAsGroup: "${APP_GID:-5000}"
       fsGroup: "${APP_GID:-5000}"
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true
