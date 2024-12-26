@@ -33,6 +33,7 @@ env:
   LOG_LEVEL: "${{ inputs.logLevel || 'debug' }}"
   RENOVATE_AUTODISCOVER: true
   RENOVATE_AUTODISCOVER_FILTER: "${{ github.repository }}"
+  RENOVATE_CONFIG_FILE: .github/renovate.json5
   RENOVATE_DRY_RUN: "${{ inputs.dryRun == true }}"
   RENOVATE_PLATFORM: github
   RENOVATE_PLATFORM_COMMIT: true
@@ -58,6 +59,6 @@ jobs:
       - name: Renovate
         uses: renovatebot/github-action@v41.0.7
         with:
-          configurationFile: .github/renovate.json5
+          configurationFile: "${{ env.RENOVATE_CONFIG_FILE }}"
           token: "${{ steps.app-token.outputs.token }}"
           renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"
