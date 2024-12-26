@@ -79,7 +79,7 @@ jobs:
           ls -R /github/workspace/default
 
       - name: Diff Resources
-        uses: docker://ghcr.io/allenporter/flux-local:v6.1.0
+        uses: docker://ghcr.io/allenporter/flux-local:v6.1.1
         with:
           args: >-
             diff ${{ matrix.resources }}
