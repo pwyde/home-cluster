@@ -14,7 +14,7 @@ on:
         default: debug
         required: false
       version:
-        description: Renovate version
+        description: Renovate Version
         default: latest
         required: false
   schedule:

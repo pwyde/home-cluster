@@ -12,6 +12,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changed-clusters:
+    name: Changed Clusters
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}
+    steps:
+      - name: Checkout Default Branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - name: Get Changed Clusters
+        id: changed-clusters
+        uses: tj-actions/changed-files@v45
+        with:
+          files: kubernetes/**
+          dir_names: true
+          dir_names_max_depth: 2
+          json: true
+          escape_json: false
+
+      - name: List All Changed Clusters
+        run: echo "${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}"
+
   flux-diff:
     name: Flux Diff
     runs-on: ubuntu-latest
@@ -19,7 +44,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        paths: ["kubernetes"]
+        paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
         resources: ["helmrelease", "kustomization"]
       max-parallel: 4
       fail-fast: false
@@ -75,7 +100,7 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Add comment
+      - name: Add Comment
         if: ${{ steps.diff.outputs.diff != '' }}
         uses: mshick/add-pr-comment@v2.8.2
         with:
@@ -91,9 +116,9 @@ jobs:
   flux-diff-success:
     needs: ["flux-diff"]
     if: ${{ always() }}
-    name: Flux Diff successful
+    name: Flux Diff Successful
     runs-on: ubuntu-latest
     steps:
-      - name: Check matrix status
+      - name: Check Matrix Status
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: exit 1
