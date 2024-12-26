@@ -84,7 +84,7 @@ jobs:
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
-            --sources "homelab-ops"
+            --sources "${{ github.event.repository.name }}"
             --output-file diff.patch
 
       - name: Generate Diff
