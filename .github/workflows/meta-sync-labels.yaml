@@ -1,31 +1,30 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Label Sync
+name: "Meta: Sync labels"
 
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
-    paths: [".github/labels.yaml"]
-  schedule:
-    - cron: "0 0 * * *" # Every day at midnight.
+    branches:
+      - main
+    paths:
+      - ".github/labels.yaml"
 
 jobs:
-  label-sync:
-    name: Label Sync
+  labels:
+    name: Sync Labels
     runs-on: ubuntu-latest
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@v1
         id: app-token
         with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+          app_id: "${{ secrets.BOT_APP_ID }}"
+          private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          sparse-checkout: .github/labels.yaml
           token: "${{ steps.app-token.outputs.token }}"
 
       - name: Sync Labels

@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Flux Diff
+name: "Flux Diff"
 
 on:
   pull_request:
@@ -12,27 +12,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changed-files:
-    name: Changed Files
+  changed-clusters:
+    name: Changed Clusters
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
+      matrix: ${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}
     steps:
-      - name: Generate Token
-        uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
-
       - name: Checkout Default Branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: "${{ steps.app-token.outputs.token }}"
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      - name: Get Changed Files
-        id: changed-files
+      - name: Get Changed Clusters
+        id: changed-clusters
         uses: tj-actions/changed-files@v45
         with:
           files: kubernetes/**
@@ -41,19 +34,21 @@ jobs:
           json: true
           escape_json: false
 
-      - name: List All Changed Files
-        run: echo "${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
+      - name: List All Changed Clusters
+        run: echo "${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}"
 
   flux-diff:
     name: Flux Diff
     runs-on: ubuntu-latest
-    needs: ["changed-files"]
+    needs: ["changed-clusters"]
     permissions:
       pull-requests: write
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
-        resources: ["helmrelease", "kustomization"]
+        paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
+        resources:
+          - helmrelease
+          - kustomization
       max-parallel: 4
       fail-fast: false
     steps:
@@ -89,7 +84,7 @@ jobs:
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
-            --sources "${{ github.event.repository.name }}"
+            --sources "homelab-ops"
             --output-file diff.patch
 
       - name: Generate Diff
@@ -108,7 +103,7 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Add Comment
+      - name: Add comment
         if: ${{ steps.diff.outputs.diff != '' }}
         uses: mshick/add-pr-comment@v2.8.2
         with:
@@ -120,13 +115,12 @@ jobs:
             ${{ steps.diff.outputs.diff }}
             ```
 
-  # Summarize matrix https://github.community/t/status-check-for-a-matrix-jobs/127354/7
   flux-diff-success:
     needs: ["flux-diff"]
     if: ${{ always() }}
-    name: Flux Diff Successful
+    name: Flux Diff successful
     runs-on: ubuntu-latest
     steps:
-      - name: Check Matrix Status
+      - name: Check matrix status
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: exit 1
