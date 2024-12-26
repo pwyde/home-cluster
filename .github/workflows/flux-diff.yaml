@@ -13,17 +13,18 @@ concurrency:
 
 jobs:
   changed-files:
-    name: Get Changed Files
+    name: Changed Files
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.changed-files.outputs.all_changed_and_modified_files }}
     steps:
-      - name: Checkout
+      - name: Checkout Default Branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      - name: Get changed files
+      - name: Get Changed Files
         id: changed-files
         uses: tj-actions/changed-files@v45
         with:
@@ -31,10 +32,9 @@ jobs:
           dir_names: true
           dir_names_max_depth: 2
           json: true
-          quotepath: false
           escape_json: false
 
-      - name: List all changed files
+      - name: List All Changed Files
         run: echo "${{ steps.changed-files.outputs.all_changed_and_modified_files }}"
 
   flux-diff:
@@ -104,7 +104,7 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Add comment
+      - name: Add Comment
         if: ${{ steps.diff.outputs.diff != '' }}
         uses: mshick/add-pr-comment@v2.8.2
         with:
@@ -119,9 +119,9 @@ jobs:
   flux-diff-success:
     needs: ["flux-diff"]
     if: ${{ always() }}
-    name: Flux Diff successful
+    name: Flux Diff Successful
     runs-on: ubuntu-latest
     steps:
-      - name: Check matrix status
+      - name: Check Matrix Status
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
         run: exit 1
