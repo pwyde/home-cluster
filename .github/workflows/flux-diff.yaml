@@ -45,11 +45,8 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        paths:
-          - kubernetes
-        resources:
-          - helmrelease
-          - kustomization
+        paths: ["kubernetes"]
+        resources: ["helmrelease", "kustomization"]
       max-parallel: 4
       fail-fast: false
     steps:
