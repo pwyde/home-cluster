@@ -45,7 +45,8 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
+        paths:
+          - kubernetes
         resources:
           - helmrelease
           - kustomization
