@@ -3,43 +3,12 @@
 version: '3'
 
 vars:
-  KUBECONFORM_SCRIPT: "{{.SCRIPTS_DIR}}/kubeconform.sh"
+  KUBERNETES_RESOURCES_DIR: "{{.ROOT_DIR}}/.taskfiles/kubernetes/resources"
 
 tasks:
 
-  apply-ks:
-    desc: Apply a Flux KS for a cluster [PATH=required]
-    cmd: >
-      flux build --namespace flux-system ks {{base .PATH}}
-      --kustomization-file {{.KUBERNETES_DIR}}/apps/{{.PATH}}/ks.yaml
-      --path {{.KUBERNETES_DIR}}/apps/{{.PATH}}{{- if contains "not found" .KS }}--dry-run \{{ end }}
-      | yq 'with(select(.apiVersion == "kustomize.toolkit.fluxcd.io/v1" and .kind == "Kustomization"); .metadata.namespace = "flux-system")' -
-      | kubectl apply --server-side --field-manager=kustomize-controller --filename -
-    requires:
-      vars: [PATH]
-    vars:
-      KS:
-        sh: flux --namespace flux-system get kustomizations {{base .PATH}} 2>&1
-    preconditions:
-      - test -f {{.KUBERNETES_DIR}}/apps/{{.PATH}}/ks.yaml
-      - which flux kubectl yq
-
-  reconcile:
-    desc: Force update Flux to pull in changes from your Git repository
-    cmd: flux --namespace flux-system reconcile kustomization cluster --with-source
-    preconditions:
-      - test -f {{.KUBECONFIG}}
-      - which flux
-
-  kubeconform:
-    desc: Validate Kubernetes manifests with kubeconform
-    cmd: bash {{.KUBECONFORM_SCRIPT}} {{.KUBERNETES_DIR}}
-    preconditions:
-      - test -f {{.KUBECONFORM_SCRIPT}}
-      - which kubeconform
-
-  resources:
-    desc: Gather common resources in your cluster, useful when asking for support
+  list-resources:
+    desc: List common resources in the cluster
     cmds:
       - for: { var: RESOURCE }
         cmd: kubectl get {{.ITEM}} {{.CLI_ARGS | default "-A"}}
@@ -56,4 +25,50 @@ tasks:
         pods
     preconditions:
       - test -f {{.KUBECONFIG}}
+      - which kubectl
+
+  delete-failed-pods:
+    desc: Delete all pods with an Evicted/Failed/Succeeded status
+    cmds:
+      - for: [Evicted, Failed, Succeeded]
+        cmd: kubectl delete pods --field-selector status.phase={{.ITEM}} -A --ignore-not-found=true
+    preconditions:
+      - which kubectl
+
+  browse-pvc:
+    desc: Browse a PersistentVolumeClaim
+    summary: |
+      Browse a PersistentVolumeClaim
+
+      NS: Namespace to browse PersistentVolumeClaims in (default: default)
+      CLAIM: PersistentVolumeClaim to browse (required)
+
+      Example:
+      task kubernetes:browse-pvc NS=media CLAIM=jellyfin
+    interactive: true
+    requires:
+      vars: [CLAIM]
+    vars:
+      NS: '{{.NS | default "default"}}'
+    cmd: kubectl browse-pvc --namespace {{.NS}} {{.CLAIM}}
+    preconditions:
+      - kubectl --namespace {{.NS}} get persistentvolumeclaims {{.CLAIM}}
+      - which kubectl
+
+  privileged-pod:
+    desc: Run a privileged pod
+    summary: |
+      Run a privileged pod
+
+      NODE: Name of node to run privileged pod on
+
+      Example:
+      task kubernetes:privileged-pod NODE=k8s-1
+    env:
+      NODE: '{{.NODE}}'
+    cmd: |
+      kubectl run privileged-{{.NODE}} -i --rm --image=null \
+        --overrides="$(yq {{.KUBERNETES_RESOURCES_DIR}}/privileged-pod.tmpl.yaml -o=json | envsubst)"
+    preconditions:
+      - test -f {{.KUBERNETES_RESOURCES_DIR}}/privileged-pod.tmpl.yaml
       - which kubectl
