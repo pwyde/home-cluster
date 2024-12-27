@@ -24,7 +24,7 @@
   "commitBodyTable": true,
   "onboarding": false,
   "requireConfig": "ignored",
-  ignorePaths: ["**/*.sops.*", "**/resources/**"],
+  "ignorePaths": ["**/*.sops.*", "**/resources/**"],
   "flux": {
     "fileMatch": [
       "(^|/)kubernetes/.+\\.ya?ml$"
