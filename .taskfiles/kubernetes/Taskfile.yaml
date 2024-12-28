@@ -72,3 +72,79 @@ tasks:
     preconditions:
       - test -f {{.KUBERNETES_RESOURCES_DIR}}/privileged-pod.tmpl.yaml
       - which kubectl
+
+  storage-speed-test:
+    desc: Run speed test on storage (iSCSI or NFS)
+    summary: |
+      Test the provisioning, mounting, and performance of using a specified storage class (iSCSI or NFS)
+
+      STORAGE: Storage type to perform test on (iSCSI or NFS)
+
+      Example:
+      task kubernetes:storage-speed-test STORAGE=iSCSI
+    requires:
+      vars: [STORAGE]
+    cmds:
+      - task: speed-test-apply-manifest
+      - task: speed-test-wait-for-pvc
+      - task: speed-test-wait-for-jobs
+      - task: speed-test-fetch-logs
+      - task: speed-test-cleanup
+
+  speed-test-apply-manifest:
+    desc: Apply the Kubernetes manifest for the speed test
+    vars:
+      # Map STORAGE to the corresponding manifest file.
+      MANIFEST_FILE:
+        sh: |
+          if [ "{{.STORAGE}}" = "iSCSI" ]; then
+            echo "speed-test-iscsi.tmpl.yaml"
+          elif [ "{{.STORAGE}}" = "NFS" ]; then
+            echo "speed-test-nfs.tmpl.yaml"
+          else
+            echo "Unsupported storage type: {{.STORAGE}}" >&2
+            exit 1
+          fi
+    cmds:
+      - kubectl apply -f {{.KUBERNETES_RESOURCES_DIR}}/{{.MANIFEST_FILE}}
+    preconditions:
+      - test -f {{.KUBERNETES_RESOURCES_DIR}}/{{.MANIFEST_FILE}}
+      - which kubectl
+
+  speed-test-wait-for-pvc:
+    internal: true
+    desc: Wait for the PVC to be fully provisioned
+    cmds:
+      - kubectl wait --for=jsonpath='{.status.phase}'=Bound pvc/test-claim --timeout=300s
+
+  speed-test-wait-for-jobs:
+    internal: true
+    desc: Wait for the read and write jobs to complete
+    cmds:
+      - kubectl wait --for=condition=complete job/write --timeout=600s
+      - kubectl wait --for=condition=complete job/read --timeout=600s
+
+  speed-test-fetch-logs:
+    internal: true
+    desc: Fetch logs from the read and write jobs
+    cmds:
+      - kubectl logs -l app=speedtest,job=write
+      - kubectl logs -l app=speedtest,job=read
+
+  speed-test-cleanup:
+    internal: true
+    desc: Clean up the Kubernetes resources created for the speed test
+    vars:
+      # Map STORAGE to the corresponding manifest file.
+      MANIFEST_FILE:
+        sh: |
+          if [ "{{.STORAGE}}" = "iSCSI" ]; then
+            echo "speed-test-iscsi.tmpl.yaml"
+          elif [ "{{.STORAGE}}" = "NFS" ]; then
+            echo "speed-test-nfs.tmpl.yaml"
+          else
+            echo "Unsupported storage type: {{.STORAGE}}" >&2
+            exit 1
+          fi
+    cmds:
+      - kubectl delete -f {{.KUBERNETES_RESOURCES_DIR}}/{{.MANIFEST_FILE}}
