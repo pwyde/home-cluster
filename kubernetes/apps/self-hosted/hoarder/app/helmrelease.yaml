@@ -75,6 +75,7 @@ spec:
               - --remote-debugging-address=0.0.0.0
               - --remote-debugging-port=9222
               - --hide-scrollbars
+              # [ERROR:zygote_host_impl_linux.cc(273)] Failed to adjust OOM score of renderer with pid 25: Permission denied (13)
               - --no-zygote
             resources:
               requests:
@@ -84,12 +85,12 @@ spec:
                 memory: 256Mi
             securityContext:
               # [ERROR:zygote_host_impl_linux.cc(273)] Failed to adjust OOM score of renderer with pid 25: Permission denied (13)
-              runAsUser: 0
-              runAsGroup: 0
-              fsGroup: 0
-              runAsNonRoot: false
+              # runAsUser: 0
+              # runAsGroup: 0
+              # fsGroup: 0
+              # runAsNonRoot: false
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
+              # readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
           meilisearch:
             image:
