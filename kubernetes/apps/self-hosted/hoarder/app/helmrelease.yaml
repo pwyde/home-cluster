@@ -158,3 +158,9 @@ spec:
             meilisearch:
               - path: /meili_data
                 subPath: meili_data
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          hoarder:
+            chrome:
+              - path: /tmp
