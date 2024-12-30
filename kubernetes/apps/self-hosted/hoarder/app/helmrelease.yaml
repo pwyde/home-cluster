@@ -53,6 +53,11 @@ spec:
               limits:
                 memory: 512Mi
             securityContext:
+              # /package/admin/s6-overlay/libexec/preinit: fatal: /run belongs to uid 0 instead of XXXX and we're lacking the privileges to fix it.
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
+              runAsNonRoot: false
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
           chrome:
