@@ -84,13 +84,8 @@ spec:
               limits:
                 memory: 256Mi
             securityContext:
-              # [ERROR:zygote_host_impl_linux.cc(273)] Failed to adjust OOM score of renderer with pid 25: Permission denied (13)
-              # runAsUser: 0
-              # runAsGroup: 0
-              # fsGroup: 0
-              # runAsNonRoot: false
               allowPrivilegeEscalation: false
-              # readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
           meilisearch:
             image:
@@ -107,6 +102,7 @@ spec:
                 memory: 128Mi
             securityContext:
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
     defaultPodOptions:
       securityContext:
