@@ -82,7 +82,7 @@ spec:
               repository: getmeili/meilisearch
               tag: v1.12.0@sha256:27f831c41cb735a9c2314b61a33a14552367af6b3e4bcf840f21fd0e64e37a8a
             env:
-              MEILI_NO_ANALYTICS: "true"
+              MEILI_NO_ANALYTICS: true
             envFrom: *envFrom
             resources:
               requests:
@@ -108,12 +108,12 @@ spec:
           http:
             port: 3000
       chrome:
-        controller: *app
+        controller: chrome
         ports:
           http:
             port: 9222
       meilisearch:
-        controller: *app
+        controller: meilisearch
         ports:
           http:
             port: 7700
