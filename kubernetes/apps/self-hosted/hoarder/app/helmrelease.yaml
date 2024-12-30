@@ -75,6 +75,8 @@ spec:
               limits:
                 memory: 256Mi
             securityContext:
+              # [ERROR:zygote_host_impl_linux.cc(273)] Failed to adjust OOM score of renderer with pid 25: Permission denied (13)
+              runAsUser: 0
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
           meilisearch:
