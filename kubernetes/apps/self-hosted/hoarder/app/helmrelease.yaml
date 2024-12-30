@@ -81,6 +81,7 @@ spec:
               fsGroup: 0
               runAsNonRoot: false
               allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
           meilisearch:
             image:
