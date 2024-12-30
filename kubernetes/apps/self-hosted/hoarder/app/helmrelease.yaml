@@ -113,7 +113,7 @@ spec:
           http:
             port: 9222
       meilisearch:
-        controller: meilisearch
+        controller: *app
         ports:
           http:
             port: 7700
