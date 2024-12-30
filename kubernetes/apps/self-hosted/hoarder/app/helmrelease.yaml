@@ -1,0 +1,143 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app hoarder
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: democratic-csi-iscsi
+      namespace: storage
+  values:
+    controllers:
+      hoarder:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          hoarder:
+            image:
+              repository: ghcr.io/hoarder-app/hoarder
+              tag: 0.20.0@sha256:d09c79e8fec1651252d25d6c4d7f723c72548bd9a070136251c901aa36d571e3
+            env:
+              BROWSER_WEB_URL: http://hoarder-chrome:9222
+              CRAWLER_VIDEO_DOWNLOAD: true
+              DATA_DIR: /data
+              MEILI_ADDR: http://hoarder-meilisearch:7700
+              NEXTAUTH_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
+              OCR_LANGS: eng,swe
+            envFrom: &envFrom
+              - secretRef:
+                  name: *app
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+          chrome:
+            image:
+              repository: gcr.io/zenika-hub/alpine-chrome
+              tag: 124@sha256:1a0046448e0bb6c275c88f86e01faf0de62b02ec8572901256ada0a8c08be23f
+            command:
+              - chromium-browser
+              - --headless
+              - --no-sandbox
+              - --disable-gpu
+              - --disable-dev-shm-usage
+              - --remote-debugging-address=0.0.0.0
+              - --remote-debugging-port=9222
+              - --hide-scrollbars
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+          meilisearch:
+            image:
+              repository: getmeili/meilisearch
+              tag: v1.12.0@sha256:27f831c41cb735a9c2314b61a33a14552367af6b3e4bcf840f21fd0e64e37a8a
+            env:
+              MEILI_NO_ANALYTICS: "true"
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: &uid 5000
+        runAsGroup: *uid
+        fsGroup: *uid
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      hoarder:
+        controller: *app
+        ports:
+          http:
+            port: 3000
+      chrome:
+        controller: *app
+        ports:
+          http:
+            port: 9222
+      meilisearch:
+        controller: *app
+        ports:
+          http:
+            port: 7700
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      data:
+        existingClaim: ${VOLSYNC_CLAIM}
+        advancedMounts:
+          data:
+            hoarder:
+              - path: /data
+                subPath: data
+            meilisearch:
+              - path: /meili_data
+                subPath: meili_data
