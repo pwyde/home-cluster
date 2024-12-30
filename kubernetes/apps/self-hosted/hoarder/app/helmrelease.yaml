@@ -108,7 +108,7 @@ spec:
           http:
             port: 3000
       chrome:
-        controller: chrome
+        controller: *app
         ports:
           http:
             port: 9222
@@ -118,7 +118,7 @@ spec:
           http:
             port: 7700
     ingress:
-      app:
+      hoarder:
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
