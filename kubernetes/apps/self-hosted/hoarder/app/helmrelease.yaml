@@ -118,14 +118,14 @@ spec:
           http:
             port: 7700
     ingress:
-      hoarder:
+      app:
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  identifier: app
+                  identifier: *app
                   port: http
         tls:
           - hosts:
