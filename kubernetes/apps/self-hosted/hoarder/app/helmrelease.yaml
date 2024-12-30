@@ -144,6 +144,12 @@ spec:
           - hosts:
               - *host
     persistence:
+      cache:
+        type: emptyDir
+        advancedMounts:
+          hoarder:
+            hoarder:
+              - path: /app/apps/web/.next/cache
       data:
         existingClaim: ${VOLSYNC_CLAIM}
         advancedMounts:
