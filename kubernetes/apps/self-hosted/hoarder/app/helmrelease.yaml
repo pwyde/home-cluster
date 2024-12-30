@@ -115,7 +115,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
     service:
-      hoarder:
+      web:
         controller: *app
         ports:
           http:
