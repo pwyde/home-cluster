@@ -83,7 +83,7 @@ spec:
                 cpu: 50m
                 memory: 128Mi
               limits:
-                memory: 256Mi
+                memory: 2Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -98,9 +98,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
-              limits:
                 memory: 128Mi
+              limits:
+                memory: 512Mi
             securityContext:
               allowPrivilegeEscalation: false
               # Error while receiving the playload. `Read-only file system (os error 30)`
