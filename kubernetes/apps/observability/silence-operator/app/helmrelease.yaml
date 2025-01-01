@@ -38,17 +38,17 @@ spec:
             address: http://kube-prometheus-stack-alertmanager:9093
     rbac:
       create: true
-    # extraDeploy:
-    #   - apiVersion: monitoring.giantswarm.io/v1alpha1
-    #     kind: Silence
-    #     metadata:
-    #       name: pve-memory-high-utilization
-    #       namespace: observability
-    #     spec:
-    #       matchers:
-    #         - name: alertname
-    #           value: NodeMemoryHighUtilization
-    #           isRegex: false
-    #         - name: instance
-    #           value: pve.*
-    #           isRegex: true
+    extraDeploy:
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: pve-memory-high-utilization
+          namespace: observability
+        spec:
+          matchers:
+            - name: alertname
+              value: NodeMemoryHighUtilization
+              isRegex: false
+            - name: instance
+              value: pve.*
+              isRegex: true
