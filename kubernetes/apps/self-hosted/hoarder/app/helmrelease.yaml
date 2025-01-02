@@ -62,8 +62,10 @@ spec:
               allowPrivilegeEscalation: false
               # /package/admin/s6-overlay/libexec/preinit: fatal: /run belongs to uid 0 instead of XXXX and we're lacking the privileges to fix it.
               # readOnlyRootFilesystem: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
+              # /package/admin/s6-overlay/libexec/preinit: fatal: /run belongs to uid 0 instead of 5000 and we're lacking the privileges to fix it.
+              # s6-overlay-suexec: fatal: child failed with exit code 100
           chrome:
             image:
               repository: gcr.io/zenika-hub/alpine-chrome
