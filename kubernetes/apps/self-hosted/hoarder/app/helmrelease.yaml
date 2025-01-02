@@ -55,14 +55,14 @@ spec:
                 memory: 512Mi
             securityContext:
               # s6-overlay-suexec: fatal: child failed with exit code 100
-              # runAsUser: 0
-              # runAsGroup: 0
-              # fsGroup: 0
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
               runAsNonRoot: false
               allowPrivilegeEscalation: false
               # /package/admin/s6-overlay/libexec/preinit: fatal: /run belongs to uid 0 instead of XXXX and we're lacking the privileges to fix it.
               # readOnlyRootFilesystem: false
-              readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
               # /package/admin/s6-overlay/libexec/preinit: fatal: /run belongs to uid 0 instead of 5000 and we're lacking the privileges to fix it.
               # s6-overlay-suexec: fatal: child failed with exit code 100
