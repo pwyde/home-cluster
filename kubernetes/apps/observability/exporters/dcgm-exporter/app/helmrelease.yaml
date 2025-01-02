@@ -40,7 +40,7 @@ spec:
         cpu: 10m
         memory: 256Mi
       limits:
-        # memory: 384Mi
+        memory: 384Mi
         nvidia.com/gpu: 1
     runtimeClassName: nvidia
     serviceMonitor:
