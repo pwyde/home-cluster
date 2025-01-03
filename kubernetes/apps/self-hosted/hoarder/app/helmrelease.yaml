@@ -32,14 +32,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          hoarder:
+          app:
             image:
               repository: ghcr.io/hoarder-app/hoarder
               tag: 0.20.0@sha256:d09c79e8fec1651252d25d6c4d7f723c72548bd9a070136251c901aa36d571e3
             env:
               BROWSER_WEB_URL: http://hoarder-chrome:9222
               CRAWLER_VIDEO_DOWNLOAD: true
-              DATA_DIR: /data
+              DATA_DIR: /hoarder_data
               INFERENCE_CONTEXT_LENGTH: 4096
               MEILI_ADDR: http://hoarder-meilisearch:7700
               NEXTAUTH_URL: "https://{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -47,6 +47,11 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: *app
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -63,8 +68,6 @@ spec:
               # s6-rmrf: fatal: unable to remove /run/s6: Read-only file system
               readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
-              # /package/admin/s6-overlay/libexec/preinit: fatal: /run belongs to uid 0 instead of 5000 and we're lacking the privileges to fix it.
-              # s6-overlay-suexec: fatal: child failed with exit code 100
           chrome:
             image:
               repository: gcr.io/zenika-hub/alpine-chrome
@@ -80,6 +83,11 @@ spec:
               - --hide-scrollbars
               # [ERROR:zygote_host_impl_linux.cc(273)] Failed to adjust OOM score of renderer with pid 25: Permission denied (13)
               - --no-zygote
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -97,6 +105,11 @@ spec:
             env:
               MEILI_NO_ANALYTICS: true
             envFrom: *envFrom
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -133,7 +146,7 @@ spec:
           http:
             port: 7700
     ingress:
-      app:
+      hoarder:
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
@@ -150,15 +163,15 @@ spec:
         type: emptyDir
         advancedMounts:
           hoarder:
-            hoarder:
+            app:
               - path: /app/apps/web/.next/cache
       data:
         existingClaim: ${VOLSYNC_CLAIM}
         advancedMounts:
           hoarder:
-            hoarder:
-              - path: /data
-                subPath: data
+            app:
+              - path: /hoarder_data
+                subPath: hoarder_data
             meilisearch:
               - path: /meili_data
                 subPath: meili_data
