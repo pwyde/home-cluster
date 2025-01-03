@@ -28,7 +28,7 @@ spec:
       namespace: storage
   values:
     controllers:
-      server:
+      immich:
         annotations: &annotations
           reloader.stakater.com/auto: "true"
         containers:
@@ -86,9 +86,6 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-      machine-learning:
-        annotations: *annotations
-        containers:
           machine-learning:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
@@ -148,7 +145,7 @@ spec:
         seccompProfile: { type: RuntimeDefault }
     service:
       server:
-        controller: server
+        controller: *app
         ports:
           http:
             port: *port
@@ -157,12 +154,12 @@ spec:
           metrics-ms:
             port: 8082
       machine-learning:
-        controller: machine-learning
+        controller: *app
         ports:
           http:
             port: *mlPort
     serviceMonitor:
-      app:
+      immich:
         serviceName: server
         endpoints:
           - port: metrics-api
@@ -176,7 +173,7 @@ spec:
             interval: 1m
             scrapeTimeout: 30s
     ingress:
-      app:
+      immich:
         annotations:
           # Set to 0 to remove the body limit on file uploads.
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
